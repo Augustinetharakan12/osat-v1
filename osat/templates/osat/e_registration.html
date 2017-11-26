@@ -9,11 +9,15 @@
 </div>
 <div id="outer" class="e_div">
 
-
-    <button type="button" class="r_button2"><a href="{% url 'osat:ec_registration' %}" style="text-decoration:none;">Create an event</a></button>
-    <button type="button" class="r_button3"><a href="{% url 'osat:er_registration' %}"style="text-decoration:none;">Register for an event</a></button>
-    <button type="button" class="r_button4"><a href="{% url 'osat:el_registration' %}"style="text-decoration:none;">Log in</a></button>
-    <button type="button" class="r_button1 " ><a href="{% url 'osat:el_registration3' %}"style="text-decoration:none;">View events you have registered for</a></button>
+    <div style="text-align:center;">
+    <button type="button" class="btn"><a href="{% url 'osat:ec_registration' %}" style="text-decoration:none;">Create an event</a></button>
+    <button type="button" class="btn"><a href="{% url 'osat:er_registration' %}"style="text-decoration:none;">Register for an event</a></button>
+    <button type="button" class="btn"><a href="{% url 'osat:el_registration' %}"style="text-decoration:none;">Log in</a></button>
+        </div>
+    <br>
+    <div style="text-align:center;">
+    <button type="button" class="btn" ><a href="{% url 'osat:el_registration3' %}"style="text-decoration:none;">View events you have registered for</a></button>
+    </div>
 
 </div>
 {% endblock %}

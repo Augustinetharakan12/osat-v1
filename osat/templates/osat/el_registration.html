@@ -3,7 +3,7 @@
 {% block body %}
 {% if suc == 0 %}
     <form method="post"> {% csrf_token %}
-        <div class="rform" id="reg2" style="width:120%;">
+        <div class="rform" id="reg2" style="width:100%;">
     <label >E-mail{% if pass1 == 1 %}<p style="display:inline;color:red;">- E-mail or password incorrect</p>{% endif %}</label>
         {{ ec_login_form.email }}
 	<label >Password</label>
@@ -14,15 +14,15 @@
         </div>
     </form>
 {% elif suc == 1 %}
-<h1>Login success</h1>
-        <h2>event- {% for i in event %}{{ i }}{% endfor %}</h2>
-    <div class="container" style="width:700px;">
+<h1 style="color:white;">Login success</h1>
+        <h2 style="color:white;">event- {% for i in event %}{{ i }}{% endfor %}</h2>
+    <div class="container" style="width:100%;">
   <table class="table">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Phone</th>
-        <th>Email</th>
+        <th style="color:white;">Name</th>
+        <th style="color:white;">Phone</th>
+        <th style="color:white;">Email</th>
       </tr>
     </thead>
     <tbody>
@@ -30,9 +30,9 @@
     {% for j in obj1 %}
     {% if i.email == j.email and i.event in event %}
       <tr>
-        <td>{{ j.fname }}</td>
-        <td>{{ j.phno }}</td>
-        <td>{{ j.email }}</td>
+        <td style="color:white;">{{ j.fname }}</td>
+        <td style="color:white;">{{ j.phno }}</td>
+        <td style="color:white;">{{ j.email }}</td>
       </tr>
     {% endif %}
     {% endfor %}
