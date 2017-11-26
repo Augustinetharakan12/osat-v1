@@ -60,11 +60,19 @@
 
 {% load staticfiles %}
 
-.icon-bar > a {
+.icon-ar > a {
     font-size:25px;
-    margin: 20px 0 0 7px;
+    margin: 5px 0 0 50px;
+
 }
 
+.icon-ar{
+
+border-left: 3px solid #8e0000;
+padding:3px;
+margin:5px;
+
+}
 .e_div{
 
  margin-top:30px;
