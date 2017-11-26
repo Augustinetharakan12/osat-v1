@@ -120,8 +120,6 @@ def el_registration(request):
     if request.method == 'POST':
         form = ec_login_form(request.POST)
         if form.is_valid():
-            print(form.data['password'])
-            print(ec.objects.filter(email=form.data['email']).values_list('password1',flat='true'))
             if form.data['password'] in ec.objects.filter(email=form.data['email']).values_list('password1',flat='true'):
                 return render(request, "osat/el_registration.html", {'ec_login_form': ec_login_form(), 'pass1': 0,'suc':1,'obj1':alumni.objects.all(),'obj2':alumnievent.objects.all(),'event':ec.objects.filter(email=form.data['email']).values_list('event',flat='true')})
             else:
@@ -201,3 +199,15 @@ def admin2notification(request):
                            'sum_of_attending': sum_of_attending, 'notificationsform': notificationsform})
     else:
         return render(request,'osat/admin2notification.html',{'notificationsform':notificationsform})
+
+
+def tickets(request):
+    if request.method=='POST':
+        form=view_events_form(request.POST)
+        mail = alumni.objects.all().values_list('email', flat='true')
+        if form.is_valid() and form.data['email'] in mail:
+            return render(request,'osat/tickets.html',{'view_events_form':view_events_form,'suc':1,'reg':0})
+        else:
+            return render(request, 'osat/tickets.html', {'view_events_form':view_events_form,'suc': 0, 'reg': 1})
+    else:
+        return render(request, 'osat/tickets.html', {'view_events_form':view_events_form,'suc': 0, 'reg': 0})
