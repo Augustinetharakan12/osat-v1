@@ -1,21 +1,51 @@
 {% extends 'osat/base.html' %}
 {% load static %}
-<!--{% block mod %}
-<div id="myModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Subscribe our Newsletter</h4>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
--->
+
 {% block body%}
 
-<h1 style="color:white">OSAT who are we?</h1>
-<p style="color:white; font-size:16px;">
+<div class="container" id="slid1"style="width:100%;margin:0 auto;">
+  <div id="myCarousel" class="carousel slide" id="slid2" data-ride="carousel" >
+    <!-- Indicators -->
+    <ol class="carousel-indicators" id="slid3">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" id="slid4">
+      <div class="item active" id="slid5">
+        <img src="{% static 'osat/osatcover.jpg' %}"  style="width:100%;margin:0 auto">
+          <div class="carousel-caption">
+
+        </div>
+
+      </div>
+
+      <div class="item" id="slid6">
+        <img src="{% static 'osat/gallery_5.jpg' %}"  style="width:100%;margin:0 auto">
+      </div>
+
+      <div class="item" id="slid7">
+        <img src="{% static 'osat/gallery_4.jpg' %}" style="width:100%;margin:0 auto">
+      </div>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+
+
+<h1 style="color:white">OSAT-who are we?</h1>
+<p style="color:#9d9d9d; font-size:16px;">
 
 Whether you graduated two years ago or two decades ago, we know you want to keep tabs on your friends and contemporaries. As alumni of Toc-H Public School, you are part of a global network of creators and change makers bound together by our shared connection and our collective passion. OSAT (Old Students Association of Toc-H Public School) maintains & enhances a highly spirited, dynamic community of alumni worldwide. By fostering remembrances of the school and enabling the renewing of acquaintances and friendships, we provide fulfilling social outlets and opportunities for giving back.
 
@@ -35,25 +65,6 @@ Since the Association’s launch, it has seen a number of official reunions and 
 
 The Toc-H experience truly goes beyond your time on campus!
 </p>
-<!--<button class="btn btn-primary"data-toggle="modal" data-target="#login-modal">Login</button>
-<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    	  <div class="modal-dialog">
-				<div class="loginmodal-container">
-					<h1>OSAT </h1><br>
-				  <form>
-					<input type="text" name="user" placeholder="mobile number">
-					<input type="password" name="pass" placeholder="unique code">
-					<input type="submit" name="login" class="login loginmodal-submit" value="Login">
-				  </form>
-
-				  <div class="login-help">
-					<a href="#">Register</a> - <a href="#">Forgot Password</a>
-				  </div>
-				</div>
-			</div>
-		  </div>
--->
-<!--<div class="modal fade-scale" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
 
 <div class="modal text-center " id="logo-modal">
   <div class="modal-dialog" role="document"  >
@@ -82,54 +93,13 @@ The Toc-H experience truly goes beyond your time on campus!
 
 
 
-<!--<div class="container" id="slid1"style="width:700px;height:330px;margin:10px -118px;">
-  <div id="myCarousel" class="carousel slide" id="slid2" data-ride="carousel" >
-    <!-- Indicators -->
-    <!--<ol class="carousel-indicators" id="slid3">
-      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-      <li data-target="#myCarousel" data-slide-to="1"></li>
-      <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
 
-    <!-- Wrapper for slides -->
-    <!--<div class="carousel-inner" id="slid4">
-      <div class="item active" id="slid5">
-        <img src="{% static 'osat/osatcover.jpg' %}" alt="Los Angeles" style="width:100%;height:380px;">
-        <!--  <div class="carousel-caption">
-          <h3>Los Angeles</h3>
-          <p>LA is always so much fun!</p>
-        </div>
-	-->
-      <!--</div>
-
-      <div class="item" id="slid6">
-        <img src="{% static 'osat/gallery_5.jpg' %}" alt="Chicago" style="width:100%;height:380px;">
-      </div>
-
-      <div class="item" id="slid7">
-        <img src="{% static 'osat/gallery_4.jpg' %}" alt="New york" style="width:100%;height:380px;">
-      </div>
-    </div>
-
-    <!-- Left and right controls -->
-    <!--<a class="left carousel-control" href="#myCarousel" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right"></span>
-      <span class="sr-only">Next</span>
-    </a>
-  </div>
-</div>
-
--->
 
 {% endblock %}
 {% block body2 %}
-<div class="collapse navbar-collapse" id="menu-items" >
+<!--<div class="collapse navbar-collapse" id="menu-items" >
             <ul class="nav navbar-nav navbar-right" id="b1">
                 <li><a class="noti" href="#" data-target="#notifications" data-toggle="collapse"style="padding-right:20px;" ><i class="material-icons" id="b2" style="font-size:35px;color:#f22424;">notifications</i></a></li>
             </ul>
- </div>
+ </div>-->
 {% endblock %}
