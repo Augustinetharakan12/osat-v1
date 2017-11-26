@@ -1,0 +1,22 @@
+{% extends 'osat/base.html' %}
+{% load staticfiles %}
+{% block body %}
+<div id="reg1">
+    <form method="post"> {% csrf_token %}
+        <div class="rform" id="reg2" style="width:120%;">
+    <label >E-mail{% block emailmatch %}{% endblock %}</label>
+        {{ ec_form.email }}
+    <label >Password</label>
+        {{ ec_form.password1 }}
+    <label >Retype the Password {% block passmatch %}{% endblock %}</label>
+        {{ ec_form.password2 }}
+
+    <label >Name of the event{% block eventmatch %}{% endblock %}</label>
+        {{ ec_form.event }}
+        <div class="pbutton" id="reg3">
+        <input type="submit" class="btn btn-primary">
+        </div>
+        </div>
+    </form>
+  </div>
+{% endblock %}

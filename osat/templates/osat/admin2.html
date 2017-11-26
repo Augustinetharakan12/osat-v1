@@ -1,0 +1,57 @@
+{% extends 'osat/base.html' %}
+{% load staticfiles %}
+
+{% block body2 %}
+    {% if suc == 1 %}
+      <button ><a href="{% url 'osat:admin2notification' %}">Add a notification</a></button>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+{% block body %}
+{% if suc == 0 %}
+<form method="post"> {% csrf_token %}
+        <div class="rform" id="reg2" >
+    <label >Login id</label>
+        {{ ec_login_form.email }}
+	<label >password</label>
+        {{ ec_login_form.password }}
+        <div class="pbutton" id="reg3">
+        <input type="submit" class="btn btn-primary">
+        </div>
+        </div>
+    </form>
+{% else %}
+<h style="color:white;">Total no of alumni's registered:<span class="badge">{{ sum_of_alumni }}</span></h>
+<p style="color:white;">Total no of alumni's attending:<span class="badge">{{ sum_of_attending }}</span></p>
+
+<hr>
+<p style="color:white;">List of all the registered members</p>
+   <div class="container" style="width:900px;">
+  <table class="table">
+    <thead>
+      <tr>
+        <th style="color:white;">Name</th>
+        <th style="color:white;">Last name</th>
+        <th style="color:white;">Email</th>
+        <th style="color:white;">Phone no:</th>
+        <th style="color:white;">Year of passout</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for i in a %}
+      <tr>
+        <td style="color:white;">{{ i.fname }}</td>
+        <td style="color:white;">{{ i.lname }}</td>
+        <td style="color:white;">{{ i.email }}</td>
+        <td style="color:white;">{{ i.phno }}</td>
+        <td style="color:white;">{{ i.year_pass }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+{% endblock %}

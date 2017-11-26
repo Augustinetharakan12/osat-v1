@@ -1,0 +1,23 @@
+{% extends 'osat/base.html' %}
+{% load staticfiles %}
+{% block body %}
+
+{% if suc == 0 %}
+<div id="reg1" >
+    <form method="post"> {% csrf_token %}
+        <div class="rform" id="reg2" >
+    <label >E-MAIL{% if email1 == 1 %}<p style="display:inline;color:red;">- please register as an alumni first</p>{% endif %}</label>
+        {{ no_attending_form.email }}
+	<label >Number of members attending</label>
+        {{ no_attending_form.no_attending }}
+            <br>
+        <div class="button" id="reg3" >
+        <input type="submit" class="btn btn-primary">
+        </div>
+        </div>
+    </form>
+</div>
+{% else %}
+<h style="color:white;">Your response has been noted </h>
+{% endif %}
+{% endblock %}

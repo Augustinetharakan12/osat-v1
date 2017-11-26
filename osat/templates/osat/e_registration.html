@@ -1,0 +1,19 @@
+{% extends 'osat/base.html' %}
+{% load staticfiles %}
+{% block e_reg %}
+<div id="e_text">
+<h1 style="text-align:center;color:white;">INSTRUCTIONS FOR EVENT HANDLING AND REGISTRATION</h1>
+<p style="text-align:center;color:#7d7d7d;">Events can be added by any alumni.The users which add an event will be event heads and will have to co-ordinate the events that
+   they are heads of.Details of interested alumni's will be added to  the login page for event heads.
+</p>
+</div>
+<div id="outer" class="e_div">
+
+
+    <button type="button" class="r_button2"><a href="{% url 'osat:ec_registration' %}" style="text-decoration:none;">Create an event</a></button>
+    <button type="button" class="r_button3"><a href="{% url 'osat:er_registration' %}"style="text-decoration:none;">Register for an event</a></button>
+    <button type="button" class="r_button4"><a href="{% url 'osat:el_registration' %}"style="text-decoration:none;">Log in</a></button>
+    <button type="button" class="r_button1 " ><a href="{% url 'osat:el_registration3' %}"style="text-decoration:none;">View events you have registered for</a></button>
+
+</div>
+{% endblock %}

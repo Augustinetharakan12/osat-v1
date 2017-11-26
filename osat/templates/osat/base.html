@@ -1,0 +1,163 @@
+{% load mathfilters %}
+{% load staticfiles %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OSAT</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'osat/style.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <script src="{% static 'osat/script.js' %}"></script>
+
+</head>
+<body background="{% static 'osat/image1.jpeg' %}">
+<div id="responsive">
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul  class="nav navbar-nav">
+
+        <li class="dropdown"></li>
+        <li><a class="active" href="{% url 'osat:index' %}">Home</a></li>
+        <li><a href="{% url 'osat:a_registration' %}">Alumni Registration</a></li>
+        <li><a href="{% url 'osat:h_registration' %}">Homecoming Registration</a></li>
+        <li><a href="{% url 'osat:e_registration' %}">Events Registration</a></li>
+        <li><a href="{% url 'osat:c_us' %}">Contact Us</a></li>
+        <li><a href="{% url 'osat:about' %}">About</a></li>
+      <li>
+          <!--<div class="icon-bar" id="nav2" >
+              <a href="https://www.facebook.com/TochAlumni.OSAT/" target="_blank" class="fa fa-facebook" style="text-decoration:none;"></a>
+              <a href="https://www.instagram.com/toch_alumni/" target="_blank" class="fa fa-instagram" style="text-decoration:none;"></a>
+              <a href="#" class="fa fa-youtube" style="text-decoration:none;"></a>
+              <a href="#" class="fa fa-whatsapp" style="text-decoration:none;"></a>-->
+      </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="row" id="log1">
+<svg viewBox="0 0 1200 400" class="svg-main-logo" id="log2" style="width:40%; height: auto;">
+    <symbol id="s-text" >
+		 <text text-anchor="middle" x="50%" y="80%">OSAT</text>
+	</symbol>
+	<a href="{% url 'osat:index' %}" style="text-decoration:none;">
+	<g class = "g-ants" id="log3">
+		<use xlink:href="#s-text" class="text-copy"></use>
+		<use xlink:href="#s-text" class="text-copy"></use>
+		<use xlink:href="#s-text" class="text-copy"></use>
+		<use xlink:href="#s-text" class="text-copy"></use>
+		<use xlink:href="#s-text" class="text-copy"></use>
+	</g>
+
+	</a>
+
+</svg>
+
+<hr >
+
+
+
+</div>
+
+
+
+<div class="container" >
+ <div class="row">
+     <div class="col-md-8">
+{% block body %}
+
+
+
+{% endblock %}
+    </div>
+  <div class="col-md-4">
+      {% block body2 %}
+
+      {% endblock %}
+  
+
+<div class="collapse" id="notifications" style="width:100%;">
+        <hr>
+            <div class="row" style="width:100%;">
+
+                  <div class="col-sm-1" >
+                    <!--<img src="resources/dp.jpg" style="width:40px; height:40px;">-->
+                  </div>
+                  <div class="col-sm-11" style="color:white;">
+                      {% for n in notif %}
+                    <span style="color:#61646b;font-size:19">{{n.title}}</span><br>
+                    <span >{{n.description}}</span><br>
+                    <span style="color:#374866;font-size:11px;">{{n.fname}} * </span>
+                      {% if dn.day|sub:n.timestamp.day == 1%}
+                      <span style="color:#374151;font-size:10px;display:inline;">{{dn.day|sub:n.timestamp.day}} day ago</span><br>
+                      {% elif dn.day|sub:n.timestamp.day > 1%}
+                      <span style="color:#374151;font-size:10px;display:inline;">{{dn.day|sub:n.timestamp.day}} days ago</span><br>
+                      {% elif dn.hour|sub:n.timestamp.hour == 1%}
+                      <span style="color:#374151;font-size:10px;display:inline;">{{dn.hour|sub:n.timestamp.hour}} hour ago</span><br>
+                      {% elif dn.hour > n.timestamp.hour %}
+                      <span style="color:#374151;font-size:10px;display:inline;">{{dn.hour|sub:n.timestamp.hour}} hours ago</span><br>
+                      {% elif dn.minute|sub:n.timestamp.minute == 1%}
+                      <span style="color:#374151;font-size:10px;display:inline;">{{dn.minute|sub:n.timestamp.minute}} minute ago</span><br>
+                      {% elif dn.minute > n.timestamp.minute %}
+                      <span style="color:#374151;font-size:10px;display:inline;">{{dn.minute|sub:n.timestamp.minute}} minutes ago</span><br>
+                      {% elif dn.second > n.timestamp.second %}
+                      <span style="color:#374151;font-size:10px;">Now</span><br>
+                      {% endif %}
+                      <hr>
+                      {% endfor %}
+                      <a href="{% url 'osat:notific' %}" style="color:red;">View all</a>
+                  </div>
+            </div>
+        </div>
+  </div>
+ </div>
+{% block about %}
+
+
+
+{% endblock %}
+
+ {% block e_reg %}
+
+
+  {% endblock %}
+
+
+
+<div id="dummy"></div>
+</div>
+</body>
+
+</html>

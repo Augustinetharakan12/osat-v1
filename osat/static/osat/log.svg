@@ -1,0 +1,14 @@
+<svg viewBox="0 0 1200 400" class="svg-main-logo img-responsive" id="log2">
+    <symbol id="s-text" >
+		 <text text-anchor="middle" x="50%" y="80%">OSAT </text>
+	</symbol>
+	<!--<a href="{% url 'osat:index' %}" style="text-decoration:none;">-->
+	<g class = "g-ants" id="log3">
+		<use xlink:href="#s-text" class="text-copy"></use>
+		<use xlink:href="#s-text" class="text-copy"></use>
+		<use xlink:href="#s-text" class="text-copy"></use>
+		<use xlink:href="#s-text" class="text-copy"></use>
+		<use xlink:href="#s-text" class="text-copy"></use>
+	</g>
+	</a>
+</svg>

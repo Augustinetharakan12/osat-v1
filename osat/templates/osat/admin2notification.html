@@ -1,0 +1,17 @@
+{% extends 'osat/base.html' %}
+{% block body %}
+    <form method="post"> {% csrf_token %}
+        <div class="rform" id="reg2" style="width:120%;">
+    <label >Name</label>
+        {{ notificationsform.fname }}
+	<label >Title</label>
+        {{ notificationsform.title }}
+	<label >description</label>
+        {{ notificationsform.description }}
+        <div class="pbutton" id="reg3">
+        <input type="submit" class="btn btn-primary">
+        </div>
+        </div>
+    </form>
+
+{% endblock %}

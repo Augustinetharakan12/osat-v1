@@ -1,0 +1,21 @@
+{% extends 'osat/base.html' %}
+{% load staticfiles %}
+{% block body %}
+{% if suc == 0 %}
+    <form method="post"> {% csrf_token %}
+        <div class="rform" id="reg2" style="width:120%;">
+    <label >E-mail{% if email1 == 1 %}<p style="display:inline;color:red;">- Please register as an alumni first</p>{% endif %}</label>
+        {{ view_events_form.email }}
+        <div class="pbutton" id="reg3">
+        <input type="submit" class="btn btn-primary">
+        </div>
+        </div>
+    </form>
+{% elif suc == 1 %}
+<ul>
+{% for i in obj2 %}
+    <li>{{ i.event }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
