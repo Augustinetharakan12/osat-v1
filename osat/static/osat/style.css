@@ -62,15 +62,16 @@
 
 .icon-ar > a {
     font-size:25px;
-    margin: 5px 0 0 50px;
+    padding:0px 15px;
+    margin: 0 auto;
 
 }
 
 .icon-ar{
 
 border-left: 3px solid #8e0000;
-padding:3px;
-margin:5px;
+padding:12px;
+margin:0 auto;
 
 }
 .e_div{
