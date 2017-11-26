@@ -1,5 +1,8 @@
 {% extends 'osat/base.html' %}
 {% load staticfiles %}
+{% block h_registration %}
+class="active"
+{% endblock %}
 {% block body %}
 
 {% if suc == 0 %}
@@ -17,16 +20,10 @@
         </div>
     </form>
 </div>
+<br>
+<a style="text-docaration:none;" href="{% url 'osat:tickets' %}"><div class ="btn btn-primary" >Payment</div></a>
 {% else %}
 <h style="color:white;">Your response has been noted </h>
 {% endif %}
 {% endblock %}
-{% block body2 %}
-<br>
-<br>
-<br>
-<br>
-<br>
-<div class ="btn"><a href="{% url 'osat:tickets' %}">Payment</a></div>
 
-{% endblock %}
