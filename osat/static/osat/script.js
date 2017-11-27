@@ -13,6 +13,8 @@ $(document).ready(function(){
     $("#reg1").hide();
     $("#reg2").hide();
     $("#reg3").hide();
+    $("#reg4").hide();
+    $("#reg5").hide();
     $("#slid1").hide();
     $("#slid2").hide();
     $("#slid3").hide();
@@ -45,6 +47,8 @@ $(document).ready(function(){
     $("#reg1").fadeIn(1000);
     $("#reg2").fadeIn(1000);
     $("#reg3").fadeIn(1000);
+    $("#reg4").fadeIn(2000);
+    $("#reg5").fadeIn(2000);
 
     if (readCookie('osat-visit') == null) {
         $('#logo-modal').modal('show');

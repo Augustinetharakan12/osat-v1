@@ -4,7 +4,7 @@ class="active"
 {% endblock %}
 {% block body %}
 <div id="reg1">
-<h1 style="color:#d6d6d6;">Alumni Registration</h1>
+<h1 style="color:#d6d6d6;text-align:center;">Alumni Registration</h1>
     <form method="post"> {% csrf_token %}
         <div class="rform" id="reg2" style="width:100%;">
     <label >First Name:</label>
@@ -13,10 +13,6 @@ class="active"
         {{ detailsform.lname }}
 	<label >Year of pass out from toc h:</label>
         {{ detailsform.year_pass }}
-	<label >Student: (y/n)</label>
-        {{ detailsform.student }}
-	<label >Institution name:</label>
-        {{ detailsform.inst_name }}
 	<label >Phone number: </label>
         {{ detailsform.phno }}
 	<label >E-mail:</label>
