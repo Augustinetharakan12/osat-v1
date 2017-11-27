@@ -29,6 +29,9 @@ def index(request):
 def about(request):
     return render(request, "osat/about.html")
 
+def chasing_infinity(request):
+    return render(request, "osat/chasing_infinity.html")
+
 def a_registration(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
