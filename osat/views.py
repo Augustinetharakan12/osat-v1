@@ -229,3 +229,6 @@ def tickets(request):
             return render(request, 'osat/tickets.html', {'view_events_form':view_events_form,'suc': 0, 'reg': 1})
     else:
         return render(request, 'osat/tickets.html', {'view_events_form':view_events_form,'suc': 0, 'reg': 0})
+
+def chasing_infinity(request):
+    return render(request,'osat/chasing_infinity.html')
