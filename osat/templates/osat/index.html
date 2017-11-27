@@ -1,4 +1,4 @@
-{% extends 'osat/base.html' %}
+﻿{% extends 'osat/base.html' %}
 {% load static %}
 {% load mathfilters %}
 {% block index %}
@@ -11,7 +11,7 @@ class="active"
 
   <div id="id01" class="w3-modal w3-animate-opacity">
     <div class="w3-modal-content w3-card-4">
-      <header class="w3-container w3-teal">
+      <header class="w3-container w3-teal" style="text-decoration:none;">
         <span onclick="document.getElementById('id01').style.display='none'"
         class="w3-button w3-large w3-display-topright">&times;</span>
         <h2>Notifications</h2>
@@ -45,11 +45,13 @@ class="active"
                       <hr>
                       {% endfor %}
                       <a href="{% url 'osat:notific' %}" style="color:red;">View all</a>
+                    <br>
+                    <br>
                   </div>
             </div>
       </div>
       <footer class="w3-container w3-teal">
-        <p>Modal Footer</p>
+        <br>
       </footer>
     </div>
   </div>
@@ -76,11 +78,11 @@ class="active"
       </div>
 
       <div class="item" id="slid6">
-        <img src="{% static 'osat/gallery_5.jpg' %}"  style="width:100%;">
+        <img src="{% static 'osat/gallery_6.jpg' %}"  style="width:100%;">
       </div>
 
       <div class="item" id="slid7">
-        <img src="{% static 'osat/gallery_4.jpg' %}" style="width:100%;">
+        <img src="{% static 'osat/gallery_7.jpg' %}" style="width:100%;">
       </div>
     </div>
 

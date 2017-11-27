@@ -5,6 +5,21 @@ from django.http import HttpResponse, JsonResponse
 
 from . forms import *
 from . models import *
+
+
+from rest_framework import viewsets
+from osat.serializers import UserSerializer
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = alumni.objects.all()
+    serializer_class = UserSerializer
+
+
+
 def index(request):
     dn=datetime.datetime.now()
     cont_dict={'notif' : notif.objects.all().order_by('-timestamp')[:2],'dn':dn}
