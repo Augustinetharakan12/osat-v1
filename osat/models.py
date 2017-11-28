@@ -30,8 +30,8 @@ class teachers(models.Model):
     fname = models.CharField(max_length=200, null=True)
     lname = models.CharField(max_length=200, null=True)
     subject = models.CharField(max_length=200, null=True)
-    yearin = models.IntegerField(max_length=200, null=True)
-    yearout=models.IntegerField(max_length=200, null=True)
+    yearin = models.IntegerField(null=True)
+    yearout = models.IntegerField(null=True,blank=True)
 
     def __str__(self):
         return self.fname+' '+ self.lname

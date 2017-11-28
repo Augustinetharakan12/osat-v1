@@ -27,10 +27,41 @@
 <p style="color:white;">Total no of alumni's attending:<span class="badge">{{ sum_of_attending }}</span></p>
 
 <hr>
-<div class="btn" data-toggle="collapse" data-target="#demo">List of all the registered members</div>
+<div class="btn" data-toggle="collapse" data-target="#demo">Registered Teachers</div>
 <br>
 <br>
 <div id="demo" class="collapse">
+   <div class="container" style="width:900px;">
+  <table class="table">
+    <thead>
+      <tr>
+        <th style="color:white;">Name</th>
+        <th style="color:white;">Last name</th>
+        <th style="color:white;">subject</th>
+        <th style="color:white;">year joined</th>
+        <th style="color:white;">year resigned</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for i in j %}
+      <tr>
+        <td style="color:white;">{{ i.fname }}</td>
+        <td style="color:white;">{{ i.lname }}</td>
+        <td style="color:white;">{{ i.subject }}</td>
+        <td style="color:white;">{{ i.yearin }}</td>
+        <td style="color:white;">{{ i.yearout }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+</div>
+
+<div class="btn" data-toggle="collapse" data-target="#demo1">Registered students</div>
+<br>
+<br>
+<div id="demo1" class="collapse">
    <div class="container" style="width:900px;">
   <table class="table">
     <thead>
