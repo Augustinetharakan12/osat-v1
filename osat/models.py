@@ -9,7 +9,7 @@ class alumni(models.Model):
     #student=models.CharField(max_length=2,null=True)#y or N
     #inst_name=models.CharField(max_length=200,null=True)
     phno=models.CharField(max_length=15,null=True)
-    email=models.CharField(max_length=100,null=True)
+    email=models.CharField(max_length=100,null=True,blank=True)
     #dob=models.DateField
     # address info
     #a_street = models.CharField(max_length=200,null=True)
