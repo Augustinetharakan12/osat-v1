@@ -60,11 +60,11 @@ $(document).ready(function(){
         $("#nav1").hide();
         $("#nav2").hide();
 
-        $("#log1").fadeIn(3000);
-        $("#log2").fadeIn(3000);
-        $("#s-text").fadeIn(3000);
-        $("#log3").fadeIn(3000);
-        $("#log4").fadeIn(3000);
+        $("#log1").fadeIn(4000);
+        $("#log2").fadeIn(4000);
+        $("#s-text").fadeIn(4000);
+        $("#log3").fadeIn(4000);
+        $("#log4").fadeIn(4000);
         $("#nav1").fadeIn(10000);
         $("#nav2").fadeIn(10000);
         createCookie('osat-visit', '', 0.01);

@@ -68,7 +68,7 @@ background-color:#111111!important;
     width:100%;
     min-width: 10px;
     position:fixed;
-    z-index:10;
+    z-index:100;
 }
 .cbox{
 
