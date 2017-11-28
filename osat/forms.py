@@ -73,3 +73,14 @@ class notificationsform(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control',
             })
+
+class t_registrationform(forms.ModelForm):
+    class Meta:
+        model=teachers
+        fields=('fname','lname','subject','yearin','yearout',)
+    def __init__(self, *args, **kwargs):
+        super(t_registrationform, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+            })

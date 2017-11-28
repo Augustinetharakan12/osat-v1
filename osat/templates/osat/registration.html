@@ -1,0 +1,10 @@
+{% extends 'osat/base.html' %}
+{% block a_registration %}
+class="active"
+{% endblock %}
+{% block body %}
+<a href="{% url 'osat:a_registration' %}"><div class="btn btn-primary">students registration</div></a>
+<br>
+<br>
+<a href="{% url 'osat:t_registration' %}"><div class="btn btn-primary">Teachers registration</div></a>
+{% endblock %}

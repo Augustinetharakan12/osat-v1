@@ -232,3 +232,17 @@ def tickets(request):
 
 def chasing_infinity(request):
     return render(request,'osat/chasing_infinity.html')
+
+def t_registration(request):
+    if request.method=='POST':
+        form=t_registrationform(request.POST)
+        if form.is_valid():
+            a=form.save(commit="false")
+            return render(request,'osat/submit.html',{'a':a})
+        else:
+            return HttpResponse('form invalid')
+    else:
+        return render(request,'osat/t_registration.html',{'t_registrationform':t_registrationform})
+
+def registration(request):
+    return render(request,'osat/registration.html')

@@ -24,6 +24,18 @@ class alumni(models.Model):
 
     def __str__(self):
         return self.fname+' '+ self.lname
+#teachers registration
+
+class teachers(models.Model):
+    fname = models.CharField(max_length=200, null=True)
+    lname = models.CharField(max_length=200, null=True)
+    subject = models.CharField(max_length=200, null=True)
+    yearin = models.IntegerField(max_length=200, null=True)
+    yearout=models.IntegerField(max_length=200, null=True)
+
+    def __str__(self):
+        return self.fname+' '+ self.lname
+
 class notif(models.Model):
     fname=models.CharField(max_length=510,null=True)
     title=models.CharField(max_length=50,null=True)
