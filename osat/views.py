@@ -34,24 +34,28 @@ def chasing_infinity(request):
 
 def a_registration(request):
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = detailsform(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            a=form.save(commit=False)
-            form.save()
-            #print ("hello")
-            #print (a.fname)
+        form1 = detailsform(request.POST)
+        form2 = view_events_form(request.POST)
+        if 'a_registration' in request.POST:
+            a=form1.save(commit=False)
+            form1.save()
             return render(request,'osat/submit.html', {'a':a})
+        elif 'pay' in request.POST:
+            paid=['augustinetharakan12@gmail.com']
+            if form2.data['email'] in paid :
+                return render(request,'osat/a_registration.html',{'view_events_form':view_events_form,'detailsform': detailsform(),'pay':1,'notpaid':0})
+            else :
+                return render(request, 'osat/a_registration.html',
+                              {'view_events_form': view_events_form, 'detailsform': detailsform(), 'pay': 0,'notpaid':1})
         else:
             return HttpResponse('Form invalid')
-
-            # if a GET (or any other method) we'll create a blank form
     else:
-        return render(request, "osat/a_registration.html", {'detailsform': detailsform()})
+        return render(request, "osat/a_registration.html", {'view_events_form':view_events_form,'detailsform': detailsform(),'pay':0,'notpaid':0})
+
+
 def h_registration(request):
     if request.method == 'POST':
-        form = _form(request.POST)
+        form = no_attending_form(request.POST)
         obj2 = alumnievent.objects.filter(email=form.data['email'])
         mail = alumnievent.objects.all().values_list('email', flat='true')
         if form.is_valid() and form.data['email'] in mail :

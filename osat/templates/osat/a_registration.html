@@ -3,6 +3,7 @@
 class="active"
 {% endblock %}
 {% block body %}
+{% if pay == 1 %}
 <div id="reg1">
 <h1 style="color:#d6d6d6;text-align:center;">Alumni Registration</h1>
     <form method="post"> {% csrf_token %}
@@ -19,9 +20,36 @@ class="active"
         {{ detailsform.email }}
             <br>
         <div class="button" name="a_registration" id="reg3" style="text-align:center">
-        <input type="submit" class="btn btn-primary" >
+        <input type="submit" class="btn btn-primary" name="a_registration">
         </div>
         </div>
     </form>
   </div>
+{% else %}
+<h1 style="color:#d6d6d6;text-align:center;">Student registration</h1>
+<p>If you have paid the money you can give in your email id and register</p>
+    <form method="post"> {% csrf_token %}
+        <div class="rform" id="reg2" style="width:100%;">
+    <label >E-mail id{% if notpaid == 1 %}<div style="display:inline;color:red">-Please pay the money first...if paid please contact the admin</div>{% endif %}</label>
+        {{ view_events_form.email }}
+            <br>
+        <div class="button" name="a_registration" id="reg3" style="text-align:center">
+        <input type="submit" class="btn btn-primary" name="pay">
+        </div>
+        </div>
+    </form>
+<br>
+<div class="btn btn-primary">Payment</div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block body2 %}
+{% if pay == 1 %}
+<br>
+<br>
+<br>
+<br>
+<a href="{% url 'osat:h_registration' %}"><div class="btn btn-primary">Homecoming registration</div></a>
+{% endif %}
 {% endblock %}
