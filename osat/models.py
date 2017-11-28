@@ -6,8 +6,8 @@ class alumni(models.Model):
     lname=models.CharField(max_length=200,null=True)
     year_pass=models.IntegerField(null=True)
     id = models.IntegerField(primary_key=True)
-    student=models.CharField(max_length=2,null=True)#y or N
-    inst_name=models.CharField(max_length=200,null=True)
+    #student=models.CharField(max_length=2,null=True)#y or N
+    #inst_name=models.CharField(max_length=200,null=True)
     phno=models.CharField(max_length=15,null=True)
     email=models.CharField(max_length=100,null=True)
     #dob=models.DateField

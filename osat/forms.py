@@ -3,7 +3,7 @@ from .models import *
 class detailsform(forms.ModelForm):
     class Meta:
         model=alumni
-        fields=('fname','lname','year_pass','student','inst_name','phno','email')
+        fields=('fname','lname','year_pass','phno','email')
     def __init__(self, *args, **kwargs):
         super(detailsform, self).__init__(*args, **kwargs)
         for field in iter(self.fields):
