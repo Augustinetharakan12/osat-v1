@@ -3,6 +3,12 @@ import datetime
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 
+#json
+import json
+from django.http import StreamingHttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from collections import namedtuple
+
 from . forms import *
 from . models import *
 
@@ -17,6 +23,22 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = alumni.objects.all()
     serializer_class = UserSerializer
+
+#json
+def ind(request):
+    if request.method=='post':
+        rec=json.loads(request.body)
+        x=namedtuple("object1",rec.keys())(*rec.values())
+        d=alumni.objects.create()
+        d.fname=x.fname
+        d.lname=x.lname
+        d.email=x.email
+        d.phno=x.phone
+        d.year_pass=2016
+        d.save()
+        return StreamingHttpResponse(str(rec))
+    return StreamingHttpResponse('was GET')
+
 
 
 

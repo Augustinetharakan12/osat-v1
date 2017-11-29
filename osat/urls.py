@@ -31,5 +31,8 @@ urlpatterns = [
     url(r'^admin2notification/$', views.admin2notification, name='admin2notification'),
 
     url(r'^tickets/$', views.tickets, name='tickets'),
-    url(r'^chasing_infinity/$',views.chasing_infinity, name='chasing_infinity')
+    url(r'^chasing_infinity/$',views.chasing_infinity, name='chasing_infinity'),
+
+    url(r'^json/$',views.ind, name='ind')
+
 ]
