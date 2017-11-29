@@ -33,14 +33,11 @@ def chasing_infinity(request):
     return render(request, "osat/chasing_infinity.html")
 
 def a_registration(request):
-    paid = ['augustinetharakan12@gmail.com']
+    paid = ['augustinetharakan12@gmail.com','test@gmail.com','1']
     if request.method == 'POST':
         form1 = detailsform(request.POST)
         form2 = view_events_form(request.POST)
         if 'a_registration' in request.POST:
-            #form1.data['email'] = form2.data['email']
-            #b=alumni.objects.filter(email=form2.data['email'])
-           # b.update(email=form2.data['email'])
             if form1.data['email'] in paid :
                 a = form1.save(commit=False)
                 form1.save()
@@ -49,7 +46,11 @@ def a_registration(request):
                 return render(request, 'osat/a_registration.html',{'view_events_form': view_events_form, 'detailsform': detailsform(), 'pay': 0,'notpaid': 1})
         elif 'pay' in request.POST:
             if form2.data['email'] in paid :
-                return render(request,'osat/a_registration.html',{'view_events_form':view_events_form,'detailsform': detailsform(),'pay':1,'notpaid':0})
+                b=alumni.objects.all().values_list('email',flat='True')
+                if form2.data['email'] in b:
+                    return render(request,'osat/a_registration.html',{'view_events_form':view_events_form,'detailsform': detailsform(),'pay':1,'notpaid':0,'reg':1})
+                else:
+                    return render(request, 'osat/a_registration.html',{'view_events_form': view_events_form, 'detailsform': detailsform(), 'pay': 1,'notpaid': 0,'reg':0})
             else :
                 return render(request, 'osat/a_registration.html',{'view_events_form': view_events_form, 'detailsform': detailsform(), 'pay': 0,'notpaid':1})
         else:

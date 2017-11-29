@@ -4,6 +4,7 @@ class="active"
 {% endblock %}
 {% block body %}
 {% if pay == 1 %}
+{% if reg == 0 %}
 <div id="reg1">
 <h1 style="color:#d6d6d6;text-align:center;">Alumni Registration</h1>
     <form method="post"> {% csrf_token %}
@@ -26,6 +27,9 @@ class="active"
     </form>
   </div>
 {% else %}
+<a href="{% url 'osat:h_registration' %}"><div class="btn btn-primary">Homecoming registration</div></a>
+{% endif %}
+{% else %}
 <h1 style="color:#d6d6d6;text-align:center;">Student registration</h1>
 <p>If you have paid the money you can give in your email id and register</p>
 <p>Homecoming registrations are done after alumni registrations</p>
@@ -43,15 +47,5 @@ class="active"
 <p>Registration fee Rs 500/-</p>
 <div class="btn btn-primary">Payment</div>
 </div>
-{% endif %}
-{% endblock %}
-
-{% block body2 %}
-{% if pay == 1 %}
-<br>
-<br>
-<br>
-<br>
-<a href="{% url 'osat:h_registration' %}"><div class="btn btn-primary">Homecoming registration</div></a>
 {% endif %}
 {% endblock %}
