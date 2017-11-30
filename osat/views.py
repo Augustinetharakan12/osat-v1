@@ -26,7 +26,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 #json
 def ind(request):
-    if request.method=='post':
+    if request.method=='POST':
         rec=json.loads(request.body)
         x=namedtuple("object1",rec.keys())(*rec.values())
         d=alumni.objects.create()
