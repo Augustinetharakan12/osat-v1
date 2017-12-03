@@ -111,8 +111,19 @@ def h_registration(request):
         return render(request,"osat/h_registration.html",{'no_attending_form':no_attending_form,'suc':0,'email1':0})
 def e_registration(request):
     return render(request,"osat/e_registration.html")
+
+
 def c_us(request):
-    return render(request,"osat/c_us.html")
+    if(request.method == 'POST'):
+        form=c_us_message_form(request.POST)
+        if form.is_valid :
+            a=form.save(commit=False)
+            a.save()
+            return render(request,'osat/c_us.html',{'form':c_us_message_form,'v':1})
+        else:
+            return HttpResponse('Form invalid')
+    else :
+        return render(request,"osat/c_us.html",{'form':c_us_message_form,'v':0})
 
 
 
@@ -215,6 +226,8 @@ def admin2(request):
     a=a.objects.all().order_by('year_pass')
     j=teachers
     j=j.objects.all()
+    m=c_us_messge
+    m=m.objects.all()
     for i in a:
         sum_of_alumni=sum_of_alumni+1
         sum_of_attending=sum_of_attending+i.no_attending
@@ -223,11 +236,11 @@ def admin2(request):
     if request.method=='POST':
         form = ec_login_form(request.POST)
         if form.is_valid() and form.data['email'] == id and form.data['password'] == passw:
-            return render(request,'osat/admin2.html',{'ec_login_form':ec_login_form ,'suc':1,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j})
+            return render(request,'osat/admin2.html',{'ec_login_form':ec_login_form ,'suc':1,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j,'m':m})
         else:
-            return render(request, 'osat/admin2.html', {'ec_login_form': ec_login_form, 'suc': 0,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j})
+            return render(request, 'osat/admin2.html', {'ec_login_form': ec_login_form, 'suc': 0,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j,'j':j,'m':m})
     else:
-        return render(request,"osat/admin2.html",{'ec_login_form':ec_login_form,'suc':0,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j})
+        return render(request,"osat/admin2.html",{'ec_login_form':ec_login_form,'suc':0,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j,'j':j,'m':m})
 
 
 def admin2notification(request):

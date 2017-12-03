@@ -68,4 +68,7 @@ class homecoming(models.Model):
     email=models.CharField(max_length=50,null=True)
     no_attending=models.IntegerField(null=True)
 
-
+class c_us_messge(models.Model):
+    name= models.CharField(max_length=50,null=True)
+    email = models.CharField(max_length=50, null=True)
+    message=models.CharField(max_length=200,null=True)

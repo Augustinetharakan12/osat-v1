@@ -30,6 +30,24 @@ class="active"
 {% endblock %}
 {% block body2 %}
     <div col-md-4>
+        <p>LEAVE A MESSAGE</p>
+           <form method="post"> {% csrf_token %}
+        <div class="rform" id="reg2" style="width:100%;">
+    <label >Name:</label>
+        {{ form.name }}
+	<label >E-mail</label>
+        {{ form.email }}
+	<label >Message</label>
+        {{ form.message }}
+            {% if v == 1 %}
+            <p style="color:green">Your message has been sent successfully </p>
+            {% endif %}
+            <br>
+        <div class="button" id="reg3" style="text-align:center">
+        <input type="submit" class="btn btn-primary" name="a_registration">
+        </div>
+        </div>
+    </form>
         <p> </p>
         <br>
         <button class="btn btn-primary"><a href="{% url 'osat:admin2' %}" style="color:white;text-align:right;">Admin page</a></div></button>

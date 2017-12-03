@@ -5,4 +5,5 @@ admin.site.register(notif)
 admin.site.register(ec)
 admin.site.register(alumnievent)
 admin.site.register(teachers)
+admin.site.register(c_us_messge)
 
