@@ -44,7 +44,7 @@ def ind(request):
 
 def index(request):
     dn=datetime.datetime.now()
-    cont_dict={'notif' : notif.objects.all().order_by('-timestamp')[:2],'dn':dn}
+    cont_dict={'notif' : notif.objects.all().order_by('-timestamp')[:2],'submit':0,'dn':dn}
     return render(request, "osat/index.html", cont_dict)
 
 
@@ -63,7 +63,7 @@ def a_registration(request):
             if form1.data['email'] in paid :
                 a = form1.save(commit=False)
                 form1.save()
-                return render(request,'osat/submit.html', {'a':a})
+                return render(request,'osat/index.html', {'name':a,'submit':1})
             else:
                 return render(request, 'osat/a_registration.html',{'view_events_form': view_events_form, 'detailsform': detailsform(), 'pay': 0,'notpaid': 1})
         elif 'pay' in request.POST:
@@ -163,7 +163,7 @@ def ec_registration(request):
                 a=form.save(commit=False)
                 form.save()
                 print ("hello")
-                return render(request, 'osat/submit.html', {'a': a})
+                return render(request, 'osat/index.html', {'name':a,'submit':1})
         else:
             return HttpResponse('Form invalid')
 
@@ -287,7 +287,7 @@ def t_registration(request):
         form=t_registrationform(request.POST)
         if form.is_valid():
             a=form.save(commit="false")
-            return render(request,'osat/submit.html',{'a':a})
+            return render(request,'osat/index.html',{'name':a,'submit':1})
         else:
             return HttpResponse('form invalid')
     else:

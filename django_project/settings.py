@@ -24,7 +24,7 @@ SECRET_KEY = 'rjyt30l-szr(6!na%(kw#!jo&@1(cvv(bxj0ksg$an0%h#)ze$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.104','localhost','127.0.0.1','osat.co.in','139.59.65.12']
 
 
 # Application definition

@@ -30,6 +30,8 @@ class teachers(models.Model):
     fname = models.CharField(max_length=200, null=True)
     lname = models.CharField(max_length=200, null=True)
     subject = models.CharField(max_length=200, null=True)
+    ph_no = models.CharField(max_length=200, null=True)
+    e_mail = models.CharField(max_length=200, null=True)
     yearin = models.IntegerField(null=True)
     yearout = models.IntegerField(null=True,blank=True)
 

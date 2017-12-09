@@ -2,10 +2,13 @@
 {% load static %}
 {% load mathfilters %}
 {% block index %}
-
 class="active"
 {% endblock %}
 {% block body3%}
+{% if submit == 1 %}
+  <h style="color:green">Thank you For submitting {{ name.fname }}</h>
+  <hr>
+{% endif %}
   <div style="width:100%;">
    <!-- <div class="col-md-11 col-sd-11"></div>-->
     <div style="text-align:right;">
@@ -17,7 +20,6 @@ class="active"
       <header class="w3-container w3-teal" style="text-decoration:none;">
         <span onclick="document.getElementById('id01').style.display='none'"
         class="w3-button w3-large w3-display-topright">&times;</span>
-        <h2>Notifications</h2>
       </header>
       <div class="w3-container">
         <div class="row" style="width:100%;">

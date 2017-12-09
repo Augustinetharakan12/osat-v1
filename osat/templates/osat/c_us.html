@@ -4,6 +4,10 @@
 class="active"
 {% endblock %}
 {% block body %}
+{% if v == 1 %}
+    <p style="color:green">Your message has been sent successfully </p>
+    <hr>
+{% endif %}
 <div class="col-md-6 col-sd-6">
 <h1 style="color:white;text-decoration: underline;">President</h1>
 <h1 style="color:white;">Nishant Tharakan</h1>
@@ -39,9 +43,6 @@ class="active"
         {{ form.email }}
 	<label >Message</label>
         {{ form.message }}
-            {% if v == 1 %}
-            <p style="color:green">Your message has been sent successfully </p>
-            {% endif %}
             <br>
         <div class="button" id="reg3" style="text-align:center">
         <input type="submit" class="btn btn-primary" name="a_registration">
