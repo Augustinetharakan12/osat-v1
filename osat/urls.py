@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^h_registration/$', views.h_registration, name='h_registration'),
     url(r'^e_registration/$', views.e_registration, name='e_registration'),
     url(r'^c_us/$', views.c_us, name='c_us'),
+    url(r'^payments/$', views.payments, name='payments'),
     url(r'^notifications/$', views.notific, name='notific'),
     url(r'^example/$', views.example, name='example'),
 

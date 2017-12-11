@@ -295,3 +295,6 @@ def t_registration(request):
 
 def registration(request):
     return render(request,'osat/registration.html')
+
+def payments(request):
+    return render(request,'osat/payments.html')

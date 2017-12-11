@@ -1,0 +1,14 @@
+{% extends 'osat/base.html' %}
+{% block payments %}
+class="active"
+{% endblock %}
+{% block about %}
+<div class="col-md-3 col-sd-3">
+    <p>Registration fee Rs 500/-</p>
+<a href="https://www.instamojo.com/@the_kake/l297b06799d814e03bf772309658be260/"><div class="btn btn-primary">Alumni registration</div></a>
+</div>
+<div class="col-md-6 col-sd-6">
+        <p>Rs 600/- + 300/- for each member coming on your behalf (husband/wife/kids above age of 5)Home coming tickets can be bought only after alumni registrations</p>
+    <a href="{% url 'osat:h_registration' %}"><div class="btn btn-primary">Homecoming registration</div></a>
+</div>
+{% endblock %}
