@@ -95,3 +95,14 @@ class c_us_message_form(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control',
             })
+
+class off_registration_form(forms.ModelForm):
+    class Meta:
+        model=off_registration
+        fields=('email',)
+    def __init__(self,*args, **kwargs):
+        super(off_registration_form,self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class':'form-control',
+            })

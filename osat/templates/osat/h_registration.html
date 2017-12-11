@@ -9,9 +9,9 @@ class="active"
 <div id="reg1" >
     <form method="post"> {% csrf_token %}
         <div class="rform" id="reg2" >
-    <label >E-MAIL{% if email1 == 1 %}<p style="display:inline;color:red;">- please register as an alumni first</p>{% endif %}</label>
+    <label >E-mail{% if email1 == 1 %}<p style="display:inline;color:red;">- please register as an alumni first</p>{% endif %}</label>
         {{ no_attending_form.email }}
-	<label >Number of members attending</label>
+	<label >Number of members attending(including yourself){% if noattend == 1 %}<p style="display:inline;color:red;">- 6 is the max</p>{% endif %}</label>
         {{ no_attending_form.no_attending }}
             <br>
         <div class="button" id="reg3" >
@@ -21,21 +21,27 @@ class="active"
     </form>
 </div>
 <br>
-<p style="font-size:20px;" id="reg4">
-    Osat Homecomming Tickects
-</p>
-<br>
-<br>
-<a style="text-docaration:none;background-color:#8e0000;
-border:black;
-color:white;
-text-align:center;
-text-decoration:none;
-display:inline_block;
-font-size:20;
-" id="reg5" href="{% url 'osat:tickets' %}"><div class ="btn btn-primary" >Payment</div></a>
 {% else %}
-<h style="color:white;" >Your response has been noted </h>
+<h style="color:white;" >Total cost : Rs {{ cost }}/- </h>
+<a
+        {% if cost == 600 %}
+            href="https://imjo.in/2xFGjY"
+        {% elif cost == 900 %}
+            href="https://imjo.in/fWUbH9"
+        {% elif cost == 1200 %}
+            href="https://imjo.in/tefXRy"
+        {% elif cost == 1500 %}
+            href="https://imjo.in/aSSxF8"
+        {% elif cost == 1800 %}
+            href="https://imjo.in/vAQ6E2"
+        {% elif cost == 2100 %}
+            href="https://imjo.in/4WraA5"
+        {% elif cost == 2400 %}
+            href="https://imjo.in/ykQtqh"
+        {% else %}
+            href="#"
+        {% endif %}
+><div class="btn btn-primary">Pay Now</div></a>
 {% endif %}
 {% endblock %}
 

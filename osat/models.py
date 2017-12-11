@@ -74,3 +74,6 @@ class c_us_messge(models.Model):
     name= models.CharField(max_length=50,null=True)
     email = models.CharField(max_length=50, null=True)
     message=models.CharField(max_length=200,null=True)
+
+class off_registration(models.Model):
+    email = models.CharField(max_length=50, null=True)

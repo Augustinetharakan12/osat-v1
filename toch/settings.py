@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mathfilters',
     'rest_framework',
+    'reset_migrations',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [

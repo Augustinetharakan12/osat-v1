@@ -55,7 +55,9 @@ def chasing_infinity(request):
     return render(request, "osat/chasing_infinity.html")
 
 def a_registration(request):
+    offline_reg=off_registration.objects.all().values_list('email',flat='true')
     paid = ['augustinetharakan12@gmail.com','test@gmail.com','1']
+    paid+=offline_reg
     if request.method == 'POST':
         form1 = detailsform(request.POST)
         form2 = view_events_form(request.POST)
@@ -81,19 +83,9 @@ def a_registration(request):
         return render(request, "osat/a_registration.html", {'view_events_form':view_events_form,'detailsform': detailsform(),'pay':0,'notpaid':0})
 
 
-def h_registration(request):
-    if request.method == 'POST':
-        form = no_attending_form(request.POST)
-        obj2 = alumnievent.objects.filter(email=form.data['email'])
-        mail = alumnievent.objects.all().values_list('email', flat='true')
-        if form.is_valid() and form.data['email'] in mail :
-            return render(request,'osat/view_events.html', {'view_events_form':view_events_form,'suc':1,'obj2':obj2,'email1':0})
-        else:
-            return render(request, 'osat/view_events.html', {'view_events_form':view_events_form,'suc': 0, 'obj2': obj2,'email1':1})
-    else:
-        return render(request,"osat/view_events.html",{'view_events_form':view_events_form,'suc':0,'email1':0})
 def e_registration(request):
     return render(request,"osat/e_registration.html")
+
 def c_us(request):
     return render(request,"osat/c_us.html")
 
@@ -104,11 +96,17 @@ def h_registration(request):
         if form.is_valid() and form.data['email'] in mail :
             a=alumni.objects.filter(email=form.data['email'])
             a.update(no_attending=form.data['no_attending'])
-            return render(request,'osat/h_registration.html', {'no_attending_form':no_attending_form,'suc':1,'email1':0})
+            no=int(form.data['no_attending'])
+            cost=600+(no-1)*300
+            if form.data['no_attending'] < '6':
+                return render(request, "osat/h_registration.html",{'no_attending_form': no_attending_form, 'suc': 1, 'email1': 0,'cost':cost})
+            else :
+                return render(request, 'osat/h_registration.html',{'no_attending_form': no_attending_form, 'suc': 0, 'email1': 0,'noattend':1})
+            #return render(request,'osat/h_registration.html', {'no_attending_form':no_attending_form,'suc':1,'email1':0})
         else:
-            return render(request, 'osat/h_registration.html', {'no_attending_form':no_attending_form,'suc': 0,'email1':1})
+            return render(request, 'osat/h_registration.html', {'no_attending_form':no_attending_form,'suc': 0,'email1':1,'noattend':0})
     else:
-        return render(request,"osat/h_registration.html",{'no_attending_form':no_attending_form,'suc':0,'email1':0})
+        return render(request,"osat/h_registration.html",{'no_attending_form':no_attending_form,'suc':0,'email1':0,'noattend':0})
 def e_registration(request):
     return render(request,"osat/e_registration.html")
 
@@ -221,24 +219,40 @@ def el_registration3(request):
 
 def admin2(request):
     a=alumni
+
     sum_of_alumni=0
     sum_of_attending=0
+
     a=a.objects.all().order_by('year_pass')
+
     j=teachers
     j=j.objects.all()
+
     m=c_us_messge
     m=m.objects.all()
+
+    off_reg_details=off_registration
+    off_reg_details=off_registration.objects.all()
+
     for i in a:
         sum_of_alumni=sum_of_alumni+1
         sum_of_attending=sum_of_attending+i.no_attending
     id="osatadmin"
     passw="osat12345"
     if request.method=='POST':
-        form = ec_login_form(request.POST)
-        if form.is_valid() and form.data['email'] == id and form.data['password'] == passw:
-            return render(request,'osat/admin2.html',{'ec_login_form':ec_login_form ,'suc':1,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j,'m':m})
-        else:
-            return render(request, 'osat/admin2.html', {'ec_login_form': ec_login_form, 'suc': 0,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j,'j':j,'m':m})
+        form1 = ec_login_form(request.POST)
+        form2 = off_registration_form(request.POST)
+        if 'adminlogin' in request.POST:
+            if form1.is_valid() and form1.data['email'] == id and form1.data['password'] == passw:
+                return render(request,'osat/admin2.html',{'ec_login_form':ec_login_form ,'suc':1,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j,'m':m,'off_reg':off_registration_form,'off_reg_details':off_reg_details})
+            else:
+                return render(request, 'osat/admin2.html', {'ec_login_form': ec_login_form, 'suc': 0,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j,'j':j,'m':m,'off_reg':off_registration_form,'off_reg_details':off_reg_details})
+        elif 'off_reg' in request.POST:
+                if form2.is_valid():
+                    c=form2.save()
+                    return render(request, 'osat/admin2.html',
+                                  {'ec_login_form': ec_login_form, 'suc': 1, 'a': a, 'sum_of_alumni': sum_of_alumni,
+                                   'sum_of_attending': sum_of_attending, 'j': j, 'm': m, 'off_reg': off_registration_form,'off_reg_details':off_reg_details})
     else:
         return render(request,"osat/admin2.html",{'ec_login_form':ec_login_form,'suc':0,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j,'j':j,'m':m})
 
@@ -259,7 +273,7 @@ def admin2notification(request):
             form.save()
             return render(request, 'osat/admin2.html',
                           {'ec_login_form': ec_login_form, 'suc': 1, 'a': a, 'sum_of_alumni': sum_of_alumni,
-                           'sum_of_attending': sum_of_attending, 'notificationsform': notificationsform})
+                           'sum_of_attending': sum_of_attending, 'notificationsform': notificationsform,})
         else:
             return render(request, 'osat/admin2.html',
                           {'ec_login_form': ec_login_form, 'suc': 1, 'a': a, 'sum_of_alumni': sum_of_alumni,

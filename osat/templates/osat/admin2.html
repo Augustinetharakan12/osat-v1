@@ -18,7 +18,7 @@
 	<label >password</label>
         {{ ec_login_form.password }}
         <div class="pbutton" id="reg3">
-        <input type="submit" class="btn btn-primary">
+        <input type="submit" name="adminlogin" class="btn btn-primary">
         </div>
         </div>
     </form>
@@ -115,6 +115,41 @@
     </tbody>
   </table>
 </div>
+</div>
+
+<div class="btn" data-toggle="collapse" data-target="#demo2">offline registration</div>
+<br>
+<br>
+<div id="demo2" class="collapse">
+   <div class="container" style="width:900px;">
+  <table class="table">
+    <thead>
+      <tr>
+        <th style="color:white;">E-mail</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for i in off_reg_details %}
+      <tr>
+        <td style="color:white;">{{ i.email }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+     <hr>
+     <h1>New offline registration</h1>
+     <form method="post"> {% csrf_token %}
+        <div class="rform" id="reg2">
+    <label >E-mail of the user</label>
+        {{ off_reg.email }}
+        <div class="pbutton" id="reg3">
+          <br>
+        <input type="submit" name="off_reg" class="btn btn-primary">
+        </div>
+        </div>
+    </form>
+</div>
+
 </div>
 {% endif %}
 
