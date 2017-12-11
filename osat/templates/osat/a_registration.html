@@ -8,7 +8,7 @@ class="active"
 <div id="reg1">
 <h1 style="color:#d6d6d6;text-align:center;">Alumni Registration</h1>
     <form method="post"> {% csrf_token %}
-        <div class="rform" id="reg2" style="width:100%;">
+        <a class="rform" id="reg2" style="width:100%;">
     <label >First Name:</label>
         {{ detailsform.fname }}
 	<label >Last Name:</label>
@@ -20,7 +20,7 @@ class="active"
 	<label >E-mail:</label>
         {{ detailsform.email }}
             <br>
-        <div class="button" name="a_registration" id="reg3" style="text-align:center">
+        <div  class="button" name="a_registration" id="reg3" style="text-align:center">
         <input type="submit" class="btn btn-primary" name="a_registration">
         </div>
         </div>

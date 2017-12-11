@@ -65,7 +65,9 @@ def a_registration(request):
             if 1:#form1.data['email'] in paid :
                 a = form1.save(commit=False)
                 form1.save()
-                return render(request,'osat/index.html', {'name':a,'submit':1})
+                #return render(request,'osat/index.html', {'name':a,'submit':1})
+                return render(request,'osat/payments.html', {'name':a,'submit':1})
+
             else:
                 return render(request, 'osat/a_registration.html',{'view_events_form': view_events_form, 'detailsform': detailsform(), 'pay': 0,'notpaid': 1})
         elif 'pay' in request.POST:
