@@ -23,14 +23,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'rjyt30l-szr(6!na%(kw#!jo&@1(cvv(bxj0ksg$an0%h#)ze$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-ALLOWED_HOSTS = ['192.168.1.104','localhost','127.0.0.1','osat.co.in','139.59.65.12']
+DEBUG = True
+ALLOWED_HOSTS = ['localhost','www.osat.co.in','.osat.co.in']
 
 
 # Application definition
 
 INSTALLED_APPS = (
-
     'osat.apps.OsatConfig',
     'django.contrib.admin',
     'django.contrib.auth',
