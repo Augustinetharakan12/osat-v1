@@ -62,7 +62,7 @@ def a_registration(request):
         form1 = detailsform(request.POST)
         form2 = view_events_form(request.POST)
         if 'a_registration' in request.POST:
-            if form1.data['email'] in paid :
+            if 1:#form1.data['email'] in paid :
                 a = form1.save(commit=False)
                 form1.save()
                 return render(request,'osat/index.html', {'name':a,'submit':1})
@@ -80,7 +80,7 @@ def a_registration(request):
         else:
             return HttpResponse('Form invalid')
     else:
-        return render(request, "osat/a_registration.html", {'view_events_form':view_events_form,'detailsform': detailsform(),'pay':0,'notpaid':0})
+        return render(request, "osat/a_registration.html", {'view_events_form':view_events_form,'detailsform': detailsform(),'pay':1,'notpaid':0,'reg':0})
 
 
 def e_registration(request):
