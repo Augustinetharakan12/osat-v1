@@ -6,6 +6,7 @@ class="active"
 {% if pay == 1 %}
 {% if reg == 0 %}
 <div id="reg1">
+    {% if reg_e == 1 %}<div style="display:inline;color:red">You have already registered</div>{% endif %}
 <h1 style="color:#d6d6d6;text-align:center;">Alumni Registration</h1>
     <form method="post"> {% csrf_token %}
         <a class="rform" id="reg2" style="width:100%;">
@@ -23,9 +24,8 @@ class="active"
         <div  class="button" name="a_registration" id="reg3" style="text-align:center">
         <input type="submit" class="btn btn-primary" name="a_registration">
         </div>
-        </div>
     </form>
-  </div>
+</div>
 {% else %}
 <a href="{% url 'osat:h_registration' %}"><div class="btn btn-primary">Homecoming registration</div></a>
 {% endif %}

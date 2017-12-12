@@ -55,17 +55,20 @@ def chasing_infinity(request):
     return render(request, "osat/chasing_infinity.html")
 
 def a_registration(request):
-
+    paid=[]
+    reg_e=alumni.objects.all().values_list('email',flat='true')
     if request.method == 'POST':
         form1 = detailsform(request.POST)
         form2 = view_events_form(request.POST)
         if 'a_registration' in request.POST:
             if 1:#form1.data['email'] in paid :
-                a = form1.save(commit=False)
-                form1.save()
-                #return render(request,'osat/index.html', {'name':a,'submit':1})
-                return render(request,'osat/payments.html', {'name':a,'submit':1})
-
+                if form1.data['email'] not in reg_e:
+                    a = form1.save(commit=False)
+                    form1.save()
+                    #return render(request,'osat/index.html', {'name':a,'submit':1})
+                    return render(request,'osat/payments.html', {'name':a,'submit':1})
+                else :
+                    return render(request, "osat/a_registration.html",{'view_events_form': view_events_form, 'detailsform': detailsform(), 'pay': 1,'notpaid': 0, 'reg': 0,'reg_e':1})
             else:
                 return render(request, 'osat/a_registration.html',{'view_events_form': view_events_form, 'detailsform': detailsform(), 'pay': 0,'notpaid': 1})
         elif 'pay' in request.POST:
@@ -80,7 +83,7 @@ def a_registration(request):
         else:
             return HttpResponse('Form invalid')
     else:
-        return render(request, "osat/a_registration.html", {'view_events_form':view_events_form,'detailsform': detailsform(),'pay':1,'notpaid':0,'reg':0})
+        return render(request, "osat/a_registration.html", {'view_events_form':view_events_form,'detailsform': detailsform(),'pay':1,'notpaid':0,'reg':0,'reg_e':0})
 
 
 def e_registration(request):
