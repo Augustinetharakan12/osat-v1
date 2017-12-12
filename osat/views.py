@@ -323,3 +323,6 @@ def registration(request):
 
 def payments(request):
     return render(request,'osat/payments.html')
+
+def donations(request):
+    return render(request,'osat/donations.html')
