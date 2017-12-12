@@ -3,6 +3,10 @@
 class="active"
 {% endblock %}
 {% block about %}
+{% if submit == 1 %}
+    <p style="color:green">Thankyou for registering {{ name.fname }}, you can now proceed with the payments </p>
+    <hr>
+{% endif %}
 <div class="col-md-3 col-sd-3">
     <p>Registration fee Rs 500/-</p>
     <br>
