@@ -4,7 +4,7 @@
 class="active"
 {% endblock %}
 {% block e_reg %}
-<div class="col-md-10 col-sd-10">
+<div >
 <div id="e_text">
 <h1 style="text-align:center;color:white;">INSTRUCTIONS FOR EVENT HANDLING AND REGISTRATION</h1>
 <p style="text-align:center;color:#7d7d7d;">Events can be added by any alumnus/alumna.The user which adds an event will be the event head and will have to co-ordinate the event.Details of interested alumni will be added to  the login page for event heads.
@@ -20,14 +20,14 @@ class="active"
     <br>
     <div style="text-align:center;">
     <button type="button" class="btn" ><a href="{% url 'osat:el_registration3' %}"style="text-decoration:none;">View registered events</a></button>
+        <br>
+        <br>
+    <a href="{% url 'osat:payments' %}"><div class="btn btn-primary">Homecoming'17 Registration</div></a>
     </div>
 
 </div>
 </div>
-<div class="col-md-2 col-sd-2">
-    <br>
-<a href="{% url 'osat:payments' %}"><div class="btn btn-primary">alumni registration fees</div></a>
-</div>
+
 {% endblock %}
 
 
