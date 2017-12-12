@@ -55,9 +55,7 @@ def chasing_infinity(request):
     return render(request, "osat/chasing_infinity.html")
 
 def a_registration(request):
-    offline_reg=off_registration.objects.all().values_list('email',flat='true')
-    paid = ['augustinetharakan12@gmail.com','test@gmail.com','1']
-    paid+=offline_reg
+
     if request.method == 'POST':
         form1 = detailsform(request.POST)
         form2 = view_events_form(request.POST)
@@ -92,18 +90,26 @@ def c_us(request):
     return render(request,"osat/c_us.html")
 
 def h_registration(request):
+    offline_reg = off_registration.objects.all().values_list('email', flat='true')
+    paid = ['augustinetharakan12@gmail.com', 'test@gmail.com', '1']
+    paid += offline_reg
     if request.method == 'POST':
         form = no_attending_form(request.POST)
         mail = alumni.objects.all().values_list('email', flat='true')
-        if form.is_valid() and form.data['email'] in mail :
-            a=alumni.objects.filter(email=form.data['email'])
-            a.update(no_attending=form.data['no_attending'])
-            no=int(form.data['no_attending'])
-            cost=600+(no-1)*300
-            if int(form.data['no_attending']) < 8:
-                return render(request, "osat/h_registration.html",{'no_attending_form': no_attending_form, 'suc': 1, 'email1': 0,'cost':cost})
-            else :
-                return render(request, 'osat/h_registration.html',{'no_attending_form': no_attending_form, 'suc': 0, 'email1': 0,'noattend':1})
+        if form.is_valid():
+            if form.data['email'] not in paid:
+                return render(request, 'osat/h_registration.html',{'no_attending_form': no_attending_form, 'suc': 0, 'email1': 2, 'noattend': 0})
+            elif form.data['email'] in mail :
+                a=alumni.objects.filter(email=form.data['email'])
+                a.update(no_attending=form.data['no_attending'])
+                no=int(form.data['no_attending'])
+                cost=600+(no-1)*300
+                if int(form.data['no_attending']) < 8:
+                    return render(request, "osat/h_registration.html",{'no_attending_form': no_attending_form, 'suc': 1, 'email1': 0,'cost':cost})
+                else:
+                    return render(request, 'osat/h_registration.html',{'no_attending_form': no_attending_form, 'suc': 0, 'email1': 0,'noattend':1})
+            else:
+                return render(request, 'osat/h_registration.html',{'no_attending_form': no_attending_form, 'suc': 0, 'email1': 1, 'noattend': 0})
             #return render(request,'osat/h_registration.html', {'no_attending_form':no_attending_form,'suc':1,'email1':0})
         else:
             return render(request, 'osat/h_registration.html', {'no_attending_form':no_attending_form,'suc': 0,'email1':1,'noattend':0})

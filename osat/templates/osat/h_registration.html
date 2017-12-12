@@ -9,7 +9,7 @@ class="active"
 <div id="reg1" >
     <form method="post"> {% csrf_token %}
         <div class="rform" id="reg2" >
-    <label >E-mail{% if email1 == 1 %}<p style="display:inline;color:red;">- please register as an alumni first</p>{% endif %}</label>
+    <label >E-mail{% if email1 == 1 %}<p style="display:inline;color:red;">- please register as an alumni first</p>{% elif email1 == 2 %}<p style="display:inline;color:red;">- please pay the alumni registration fee first(it will take 1 or 2 days for payment to be processed)</p>{% endif %}</label>
         {{ no_attending_form.email }}
 	<label >Number of members attending(including yourself){% if noattend == 1 %}<p style="display:inline;color:red;">- 7 is the max</p>{% endif %}</label>
         {{ no_attending_form.no_attending }}
