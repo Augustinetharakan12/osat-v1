@@ -106,7 +106,7 @@ def h_registration(request):
                 a=alumni.objects.filter(email=form.data['email'])
                 a.update(no_attending=form.data['no_attending'])
                 no=int(form.data['no_attending'])
-                cost=600+(no-1)*300
+                cost=no*300
                 if int(form.data['no_attending']) < 8:
                     return render(request, "osat/h_registration.html",{'no_attending_form': no_attending_form, 'suc': 1, 'email1': 0,'cost':cost})
                 else:
