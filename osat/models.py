@@ -34,6 +34,7 @@ class teachers(models.Model):
     e_mail = models.CharField(max_length=200, null=True)
     yearin = models.IntegerField(null=True)
     yearout = models.IntegerField(null=True,blank=True)
+    no_attending = models.IntegerField(default=0)
 
     def __str__(self):
         return self.fname+' '+ self.lname

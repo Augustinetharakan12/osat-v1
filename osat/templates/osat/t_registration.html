@@ -3,7 +3,12 @@
 class="active"
 {% endblock %}
 {% block body %}
+{% if submit == 0 %}
 <div id="reg1">
+    {% if email == 1 %}
+     <p style="color:red">You have already registered</p>
+     <hr>
+    {% endif %}
 <h1 style="color:#d6d6d6;text-align:center;">Teachers registration</h1>
     <form method="post"> {% csrf_token %}
         <div class="rform" id="reg2" style="width:100%;">
@@ -23,9 +28,50 @@ class="active"
         {{ t_registrationform.yearout }}
             <br>
         <div class="button" name="a_registration" id="reg3" style="text-align:center">
-        <input type="submit" class="btn btn-primary" >
+        <input type="submit" class="btn btn-primary" name="teacher_registation" >
         </div>
         </div>
     </form>
   </div>
+{% elif submit == 1 %}
+    {% for i in teacher_data %}
+        <p style="color:green">Thankyou for registering {{ i.fname  }}</p>
+        <hr>
+        <br>
+        <p>We invite you with family for Homecoming '17</p>
+        <br>
+        <p>will you come for Homecoming ?(You can always update this info whenever you want)</p>
+        <div class="col-md-2 col-sd-2">
+            <a href="{% url 'osat:t_registration_homecoming' i.pk %}"><div class="btn btn primary">Yes</div></a>
+            <br>
+            <br>
+        </div>
+        <div class="col-md-2 col-sd-2">
+            <a href="{% url 'osat:index' %}"><div class="btn btn primary">No</div></a>
+            <br>
+            <br>
+        </div>
+        <div class="col-md-2 col-sd-2">
+            <a href="{% url 'osat:index' %}"><div class="btn btn primary">Not decided yet</div></a>
+            <br>
+            <br>
+        </div>
+    {% endfor %}
+{% endif %}
+{% endblock %}
+{% block body2 %}
+{% if submit == 0 %}
+<br>
+<p>Already registered ?</p>
+<form method="post"> {% csrf_token %}
+        <div class="rform" id="reg2" style="width:100%;">
+    <label >E-mail id{% if submit2 == 1 %}<p style="display:inline;color:red;">- please register</p>{% elif email1 == 2 %}<p style="display:inline;color:red;">- please pay the alumni registration fee first(it will take 1 or 2 days for payment to be processed)</p>{% endif %}</label>
+        {{ t_registration_homecomingform.email }}
+            <br>
+        <div  class="button" id="reg3" style="text-align:center">
+        <input type="submit" name="teacher_homecoming" class="btn btn-primary" >
+        </div>
+        </div>
+    </form>
+{% endif %}
 {% endblock %}

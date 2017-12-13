@@ -310,13 +310,39 @@ def chasing_infinity(request):
 def t_registration(request):
     if request.method=='POST':
         form=t_registrationform(request.POST)
-        if form.is_valid():
-            a=form.save(commit="false")
-            return render(request,'osat/index.html',{'name':a,'submit':1})
-        else:
-            return HttpResponse('form invalid')
+        form2=view_events_form(request.POST)
+        registered = teachers.objects.all().values_list('e_mail', flat='true')
+        if 'teacher_registation' in request.POST:
+            if form.is_valid():
+                if form.data['e_mail'] in registered :
+                    return render(request, 'osat/t_registration.html',{'t_registration_homecomingform':view_events_form,'t_registrationform': t_registrationform, 'submit': 0,'email':1})
+                else:
+                    a=form.save(commit="false")
+                    teacher_data=teachers.objects.filter(e_mail=form.data['e_mail'])
+                    return render(request,'osat/t_registration.html',{'t_registration_homecomingform':view_events_form,'t_registrationform':t_registrationform,'teacher_data':teacher_data,'submit':1})
+                    #return render(request,'osat/index.html',{'name':a,'submit':1})
+            else:
+                return HttpResponse('form invalid')
+        elif 'teacher_homecoming' in request.POST:
+            if form2.is_valid:
+                if form2.data['email'] in registered:
+                    teacher_data = teachers.objects.filter(e_mail=form2.data['email'])
+                    return render(request, 'osat/t_registration.html',{'t_registration_homecomingform': view_events_form,'t_registrationform': t_registrationform, 'teacher_data': teacher_data, 'submit': 1})
+                else :
+                    return render(request, 'osat/t_registration.html',{'t_registration_homecomingform': view_events_form,'t_registrationform': t_registrationform, 'submit': 0,'submit2':1})
     else:
-        return render(request,'osat/t_registration.html',{'t_registrationform':t_registrationform})
+        return render(request,'osat/t_registration.html',{'t_registration_homecomingform':view_events_form,'t_registrationform':t_registrationform,'submit':0,'submit2':0})
+
+def t_registration_homecoming(request, email):
+    teacher_details=teachers.objects.filter(pk=email)
+    if request.method=='POST':
+        form = t_registration_homecomingform(request.POST)
+        if form.is_valid():
+            teacher_details.update(no_attending=form.data['no_attending'])
+            return render(request,'osat/index.html')
+            #render(request, 'osat/t_registration_homecoming.html',{'form': t_registration_homecomingform, 'email': email, 'teacher_details': teacher_details})
+    else:
+        return render(request,'osat/t_registration_homecoming.html',{'form':t_registration_homecomingform,'email':email,'teacher_details':teacher_details})
 
 def registration(request):
     return render(request,'osat/registration.html')

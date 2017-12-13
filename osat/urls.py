@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^a_registration/$', views.a_registration, name='a_registration'),
 
     url(r'^t_registration/$', views.t_registration, name='t_registration'),
+    url(r'^t_registration_homecoming/(?P<email>[0-9]+)$', views.t_registration_homecoming, name='t_registration_homecoming'),
 
     url(r'^h_registration/$', views.h_registration, name='h_registration'),
     url(r'^e_registration/$', views.e_registration, name='e_registration'),

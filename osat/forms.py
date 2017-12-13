@@ -85,6 +85,17 @@ class t_registrationform(forms.ModelForm):
                 'class': 'form-control',
             })
 
+class t_registration_homecomingform(forms.ModelForm):
+    class Meta:
+        model=teachers
+        fields=('no_attending',)
+    def __init__(self, *args, **kwargs):
+        super(t_registration_homecomingform, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+            })
+
 class c_us_message_form(forms.ModelForm):
     class Meta:
         model=c_us_messge
