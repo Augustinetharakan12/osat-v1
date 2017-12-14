@@ -94,7 +94,7 @@ def c_us(request):
 
 def h_registration(request):
     offline_reg = off_registration.objects.all().values_list('email', flat='true')
-    paid = ['augustinetharakan12@gmail.com', 'test@gmail.com', '1']
+    paid = ['melvin.moncey@gmail.com', 'mriduldey@gmail.com', 'allen.moncey@gmail.com', 'nishanththarakan@gmail.com', 'dhanyamelam@gmail.com', 'alangodfrey12@gmail.com', 'arunvidyasagar@gmail.com', 'njprince25@hotmail.com','nishanththarakan@gmail.com','sonellamanoj@gmail.com','anujgk@gmail.com','tharunjohn123@gmail.com','georgevt@outlook.com','charlesraj88@gmail.com']
     paid += offline_reg
     if request.method == 'POST':
         form = no_attending_form(request.POST)
