@@ -26,7 +26,7 @@ class="active"
         {{ t_registrationform.yearin }}
     <label >Year of leaving Toc H(if not, leave the field blank)</label>
         {{ t_registrationform.yearout }}
-    <h1><br><br>We invite you with family for the Homecoming '17 event<br><br></h1>
+    <h1 style="text-align:center;"><br><br>We invite you and your family for the Homecoming '17 event<br><br></h1>
     <label >Will you be coming ?</label>
         {{ t_registrationform.attending }}
             <br><br>
@@ -41,12 +41,12 @@ class="active"
   </div>
 {% elif submit == 1 %}
     {% for i in teacher_data %}
-        <p style="color:green">Thankyou for registering {{ i.fname  }}</p>
+        <p style="color:green">Thankyou for registering {{ i.fname  }}.Please confirm if you are coming. </p>
         <hr>
         <br>
-        <p>We invite you with family for Homecoming '17</p>
+        <p>We invite you and your family for Homecoming '17</p>
         <br>
-        <p>will you come for Homecoming ?(You can always update this info whenever you want)</p>
+        <p>Will you come for Homecoming ?(You can always update this info whenever you want)</p>
         <div class="col-md-2 col-sd-2">
             <a href="{% url 'osat:t_registration_homecoming' i.pk %}"><div class="btn btn primary">Yes</div></a>
             <br>
@@ -68,7 +68,8 @@ class="active"
 {% block body2 %}
 {% if submit == 0 %}
 <br>
-<p>Already registered ?</p>
+<br>
+<p>If you wish to change your mind about attending the event please enter your email </p>
 <form method="post"> {% csrf_token %}
         <div class="rform" id="reg2" style="width:100%;">
     <label >E-mail id{% if submit2 == 1 %}<p style="display:inline;color:red;">- please register</p>{% endif %}</label>
