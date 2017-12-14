@@ -39,6 +39,11 @@ def ind(request):
         return StreamingHttpResponse(str(rec))
     return StreamingHttpResponse('was GET')
 
+#people who paid
+offline_reg = off_registration.objects.all().values_list('email', flat='true')
+paid = ['melvin.moncey@gmail.com', 'mriduldey@gmail.com', 'allen.moncey@gmail.com', 'nishanththarakan@gmail.com', 'dhanyamelam@gmail.com', 'alangodfrey12@gmail.com', 'arunvidyasagar@gmail.com', 'njprince25@hotmail.com','nishanththarakan@gmail.com','sonellamanoj@gmail.com','anujgk@gmail.com','tharunjohn123@gmail.com','georgevt@outlook.com','charlesraj88@gmail.com','rohithdas20@gmail.com']
+paid += offline_reg
+paid_no=len(paid)
 
 
 
@@ -93,9 +98,6 @@ def c_us(request):
     return render(request,"osat/c_us.html")
 
 def h_registration(request):
-    offline_reg = off_registration.objects.all().values_list('email', flat='true')
-    paid = ['melvin.moncey@gmail.com', 'mriduldey@gmail.com', 'allen.moncey@gmail.com', 'nishanththarakan@gmail.com', 'dhanyamelam@gmail.com', 'alangodfrey12@gmail.com', 'arunvidyasagar@gmail.com', 'njprince25@hotmail.com','nishanththarakan@gmail.com','sonellamanoj@gmail.com','anujgk@gmail.com','tharunjohn123@gmail.com','georgevt@outlook.com','charlesraj88@gmail.com']
-    paid += offline_reg
     if request.method == 'POST':
         form = no_attending_form(request.POST)
         mail = alumni.objects.all().values_list('email', flat='true')
@@ -245,6 +247,11 @@ def admin2(request):
     off_reg_details=off_registration
     off_reg_details=off_registration.objects.all()
 
+    teacher_homecoming=0
+    teachers_registered=0
+    for i in j:
+        teachers_registered+=1
+        teacher_homecoming+=i.no_attending
     for i in a:
         sum_of_alumni=sum_of_alumni+1
         sum_of_attending=sum_of_attending+i.no_attending
@@ -255,7 +262,7 @@ def admin2(request):
         form2 = off_registration_form(request.POST)
         if 'adminlogin' in request.POST:
             if form1.is_valid() and form1.data['email'] == id and form1.data['password'] == passw:
-                return render(request,'osat/admin2.html',{'ec_login_form':ec_login_form ,'suc':1,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j,'m':m,'off_reg':off_registration_form,'off_reg_details':off_reg_details})
+                return render(request,'osat/admin2.html',{'ec_login_form':ec_login_form ,'suc':1,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j,'m':m,'off_reg':off_registration_form,'off_reg_details':off_reg_details,'teachers_registered':teachers_registered,'teacher_homecoming':teacher_homecoming,'paid':paid,'paid_no':paid_no})
             else:
                 return render(request, 'osat/admin2.html', {'ec_login_form': ec_login_form, 'suc': 0,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j,'j':j,'m':m,'off_reg':off_registration_form,'off_reg_details':off_reg_details})
         elif 'off_reg' in request.POST:

@@ -23,13 +23,25 @@
         </div>
     </form>
 {% else %}
-<h style="color:white;">Total no of alumni's registered:<span class="badge">{{ sum_of_alumni }}</span></h>
-<p style="color:white;">Total no of alumni's attending:<span class="badge">{{ sum_of_attending }}</span></p>
-
+<hr>
+<div class="col-md-6 col-sd-6">
+<p style="color:white;">Alumnis registered:<span class="badge">{{ sum_of_alumni }}</span></p>
+<p style="color:white;">Alumnis attending:<span class="badge">{{ sum_of_attending }}</span></p>
+<p style="color:white;">Alumni registration fee:<span class="badge">{{ paid_no }}</span></p>
+</div>
+<div class="col-md-6 col-sd-6">
+<p style="color:white;">Teachers registered:<span class="badge">{{ teachers_registered }}</span></p>
+<p style="color:white;">Teachers attending:<span class="badge">{{ teacher_homecoming }}</span></p>
+</div>
+<br>
+<br>
+<br>
+<br>
 <hr>
 <div class="btn" data-toggle="collapse" data-target="#demo">Registered Teachers</div>
 <br>
 <br>
+
 <div id="demo" class="collapse">
    <div class="container" style="width:900px;">
   <table class="table">
@@ -158,6 +170,30 @@
         </div>
         </div>
     </form>
+</div>
+</div>
+<div class="btn" data-toggle="collapse" data-target="#paid">Alumni registration fee paid</div>
+<br>
+<br>
+
+<div id="paid" class="collapse">
+   <div class="container" style="width:900px;">
+  <table class="table">
+    <thead>
+      <tr>
+        <th style="color:white;">email</th>
+      </tr>
+    </thead>
+    <tbody>
+    <ol>
+    {% for i in paid %}
+      <tr>
+        <td style="color:white;">{{ i }}</td>
+      </tr>
+    {% endfor %}
+    </ol>
+    </tbody>
+  </table>
 </div>
 
 </div>
