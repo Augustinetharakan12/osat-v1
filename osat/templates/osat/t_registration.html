@@ -26,6 +26,12 @@ class="active"
         {{ t_registrationform.yearin }}
     <label >Year resigned from Toc H(if not resigned leave it blank)</label>
         {{ t_registrationform.yearout }}
+    <h1><br><br>We invite you with family for the Homecoming '17 event<br><br></h1>
+    <label >Will you be coming ?</label>
+        {{ t_registrationform.attending }}
+            <br><br>
+    <label >If Yes how many including you will come for the Homecoming</label>
+        {{ t_registrationform.no_attending }}
             <br>
         <div class="button" name="a_registration" id="reg3" style="text-align:center">
         <input type="submit" class="btn btn-primary" name="teacher_registation" >
@@ -65,7 +71,7 @@ class="active"
 <p>Already registered ?</p>
 <form method="post"> {% csrf_token %}
         <div class="rform" id="reg2" style="width:100%;">
-    <label >E-mail id{% if submit2 == 1 %}<p style="display:inline;color:red;">- please register</p>{% elif email1 == 2 %}<p style="display:inline;color:red;">- please pay the alumni registration fee first(it will take 1 or 2 days for payment to be processed)</p>{% endif %}</label>
+    <label >E-mail id{% if submit2 == 1 %}<p style="display:inline;color:red;">- please register</p>{% endif %}</label>
         {{ t_registration_homecomingform.email }}
             <br>
         <div  class="button" id="reg3" style="text-align:center">

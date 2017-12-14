@@ -35,7 +35,6 @@
   <table class="table">
     <thead>
       <tr>
-        <th style="color:white;">No:</th>
         <th style="color:white;">Name</th>
         <th style="color:white;">Last name</th>
         <th style="color:white;">subject</th>
@@ -43,6 +42,10 @@
         <th style="color:white;">E-mail</th>
         <th style="color:white;">year joined</th>
         <th style="color:white;">year resigned</th>
+        <th style="color:white;">homecoming</th>
+        <th style="color:white;">No </th>
+
+
       </tr>
     </thead>
     <tbody>
@@ -56,6 +59,8 @@
         <td style="color:white;">{{ i.e_mail }}</td>
         <td style="color:white;">{{ i.yearin }}</td>
         <td style="color:white;">{{ i.yearout }}</td>
+        <td style="color:white;">{{ i.attending }}</td>
+        <td style="color:white;">{{ i.no_attending }}</td>
       </tr>
     {% endfor %}
     </ol>
@@ -78,6 +83,7 @@
         <th style="color:white;">Email</th>
         <th style="color:white;">Phone no:</th>
         <th style="color:white;">Year of passout</th>
+        <th style="color:white;">event</th>
       </tr>
     </thead>
     <tbody>
@@ -88,6 +94,7 @@
         <td style="color:white;">{{ i.email }}</td>
         <td style="color:white;">{{ i.phno }}</td>
         <td style="color:white;">{{ i.year_pass }}</td>
+        <td style="color:white;">{{ i.no_attending }}</td>
       </tr>
     {% endfor %}
     </tbody>

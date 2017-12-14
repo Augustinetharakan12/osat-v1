@@ -9,6 +9,11 @@ class="active"
   <h style="color:green">Thank you For submitting {{ name.fname }}</h>
   <hr>
 {% endif %}
+{% if submit == 2 %}
+{% for i in teacher_details %}
+<p style="color:green">Thankyou for submitting the details {{ i.fname }},see you on December 23rd</p>
+{% endfor %}
+{% endif %}
   <div style="width:100%;">
    <!-- <div class="col-md-11 col-sd-11"></div>-->
     <div style="text-align:right;">

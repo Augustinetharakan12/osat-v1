@@ -172,7 +172,7 @@ def ec_registration(request):
                 a=form.save(commit=False)
                 form.save()
                 print ("hello")
-                return render(request, 'osat/index.html', {'name':a,'submit':1})
+                return render(request, 'osat/index.html', {'name':a,'submit':1,'notif' : notif.objects.all().order_by('-timestamp')[:2],'dn':datetime.datetime.now()})
         else:
             return HttpResponse('Form invalid')
 
@@ -317,9 +317,12 @@ def t_registration(request):
                 if form.data['e_mail'] in registered :
                     return render(request, 'osat/t_registration.html',{'t_registration_homecomingform':view_events_form,'t_registrationform': t_registrationform, 'submit': 0,'email':1})
                 else:
+
                     a=form.save(commit="false")
                     teacher_data=teachers.objects.filter(e_mail=form.data['e_mail'])
-                    return render(request,'osat/t_registration.html',{'t_registration_homecomingform':view_events_form,'t_registrationform':t_registrationform,'teacher_data':teacher_data,'submit':1})
+                    teacher_details=teachers.objects.filter(e_mail=form.data['e_mail'])
+                    return render(request, 'osat/index.html', {'teacher_details': teacher_details, 'submit': 2,'notif': notif.objects.all().order_by('-timestamp')[:2],'dn': datetime.datetime.now()})
+                    #return render(request,'osat/t_registration.html',{'t_registration_homecomingform':view_events_form,'t_registrationform':t_registrationform,'teacher_data':teacher_data,'submit':1})
                     #return render(request,'osat/index.html',{'name':a,'submit':1})
             else:
                 return HttpResponse('form invalid')
@@ -339,7 +342,7 @@ def t_registration_homecoming(request, email):
         form = t_registration_homecomingform(request.POST)
         if form.is_valid():
             teacher_details.update(no_attending=form.data['no_attending'])
-            return render(request,'osat/index.html')
+            return render(request,'osat/index.html',{'teacher_details':teacher_details,'submit':2,'notif' : notif.objects.all().order_by('-timestamp')[:2],'dn':datetime.datetime.now()})
             #render(request, 'osat/t_registration_homecoming.html',{'form': t_registration_homecomingform, 'email': email, 'teacher_details': teacher_details})
     else:
         return render(request,'osat/t_registration_homecoming.html',{'form':t_registration_homecomingform,'email':email,'teacher_details':teacher_details})

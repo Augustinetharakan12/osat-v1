@@ -1,5 +1,13 @@
 import datetime
 from django.db import models
+from django import forms
+
+CHOICES = (
+    ('Yes','yes'),
+    ('No', 'No'),
+    ('Maybe','Maybe'),
+)
+
 
 class alumni(models.Model):
     fname=models.CharField(max_length=200,null=True)
@@ -35,6 +43,7 @@ class teachers(models.Model):
     yearin = models.IntegerField(null=True)
     yearout = models.IntegerField(null=True,blank=True)
     no_attending = models.IntegerField(default=0)
+    attending = models.CharField(max_length=6, choices=CHOICES, default='Yes')
 
     def __str__(self):
         return self.fname+' '+ self.lname

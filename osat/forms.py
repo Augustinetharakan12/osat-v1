@@ -77,7 +77,7 @@ class notificationsform(forms.ModelForm):
 class t_registrationform(forms.ModelForm):
     class Meta:
         model=teachers
-        fields=('fname','lname','subject','yearin','yearout','ph_no','e_mail')
+        fields=('fname','lname','subject','yearin','yearout','ph_no','e_mail','no_attending','attending')
     def __init__(self, *args, **kwargs):
         super(t_registrationform, self).__init__(*args, **kwargs)
         for field in iter(self.fields):
