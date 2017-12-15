@@ -3,6 +3,11 @@ import datetime
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 
+from PIL import Image, ImageDraw, ImageFont
+
+#import mime
+
+
 #json
 import json
 from django.http import StreamingHttpResponse
@@ -15,6 +20,8 @@ from . models import *
 
 from rest_framework import viewsets
 from osat.serializers import UserSerializer
+
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -305,7 +312,47 @@ def tickets(request):
         form=view_events_form(request.POST)
         mail = alumni.objects.all().values_list('email', flat='true')
         if form.is_valid() and form.data['email'] in mail:
-            return render(request,'osat/tickets.html',{'view_events_form':view_events_form,'suc':1,'reg':0})
+            alumni_email=alumni.objects.filter(email=form.data['email']).values_list('email',flat='true')
+            alumni_pk=alumni.objects.filter(email=form.data['email']).values_list('pk',flat='true')
+
+            #alumni_admits=alumni.objects.filter(email=form.data['email']).values_list('no_attending',flat='true')
+
+            #url1 = 'C:/Users/THARAKAN/Desktop/ticket.png'
+            #url2='/home/django/django_project/osat/static/osat/ticket.png'
+            url2='ticket.png'
+
+            image = Image.open(url2)
+
+            #for windows
+            #font = ImageFont.truetype("arial.ttf", 20)
+            #font2 = ImageFont.truetype("arial.ttf", 30)
+            #font3 = ImageFont.truetype("arial.ttf", 20)
+            #end
+
+            #for ubuntu
+            font = ImageFont.truetype("arial.ttf", 20)
+            font2 = ImageFont.truetype("arial.ttf", 30)
+            font3 = ImageFont.truetype("arial.ttf", 20)
+            #end
+
+            draw = ImageDraw.Draw(image)
+
+            email_image=alumni_email[0]
+            pk_image=str(alumni_pk[0])
+
+            draw.text(xy=(40, 185), text="E-mail:"+email_image, fill=(0, 0, 0), font=font)
+            draw.text(xy=(660, 178), text="1", fill=(255, 255, 255), font=font2)
+            draw.text(xy=(600, 220), text="Ticket No:"+pk_image, fill=(255, 255, 255), font=font3)
+
+            # image.save('C:\Users\THARAKAN\Desktop\ti2.png', 'JPEG')
+            # im.save(file + ".png", "JPEG")
+            # end image of ticket
+
+            response = HttpResponse(content_type="image/png")
+            image.save(response,"png")
+            return response
+
+            #return render(request,'osat/tickets.html',{'view_events_form':view_events_form,'suc':1,'reg':0})
         else:
             return render(request, 'osat/tickets.html', {'view_events_form':view_events_form,'suc': 0, 'reg': 1})
     else:
