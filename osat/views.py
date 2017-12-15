@@ -41,7 +41,7 @@ def ind(request):
 
 #people who paid
 offline_reg = off_registration.objects.all().values_list('email', flat='true')
-paid = ['melvin.moncey@gmail.com', 'mriduldey@gmail.com', 'allen.moncey@gmail.com', 'nishanththarakan@gmail.com', 'dhanyamelam@gmail.com', 'alangodfrey12@gmail.com', 'arunvidyasagar@gmail.com', 'njprince25@hotmail.com','nishanththarakan@gmail.com','sonellamanoj@gmail.com','anujgk@gmail.com','tharunjohn123@gmail.com','georgevt@outlook.com','charlesraj88@gmail.com','rohithdas20@gmail.com']
+paid = ['nainakrishnan@gmail.com', 'sumitmammen@gmail.com','melvin.moncey@gmail.com', 'mriduldey@gmail.com', 'allen.moncey@gmail.com', 'nishanththarakan@gmail.com', 'dhanyamelam@gmail.com', 'alangodfrey12@gmail.com', 'arunvidyasagar@gmail.com', 'njprince25@hotmail.com','nishanththarakan@gmail.com','sonellamanoj@gmail.com','anujgk@gmail.com','tharunjohn123@gmail.com','georgevt@outlook.com','charlesraj88@gmail.com','rohithdas20@gmail.com']
 paid += offline_reg
 paid_no=len(paid)
 
