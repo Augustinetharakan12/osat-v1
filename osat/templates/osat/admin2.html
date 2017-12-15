@@ -3,7 +3,7 @@
 
 {% block body2 %}
     {% if suc == 1 %}
-      <div class="btn"><a href="{% url 'osat:admin2notification' %}">Add a notification</a></div>
+      <!--<div class="btn"><a href="{% url 'osat:admin2notification' %}">Add a notification</a></div>-->
     {% endif %}
 </div>
 {% endblock %}
@@ -90,6 +90,7 @@
   <table class="table">
     <thead>
       <tr>
+        <th style="color:white;">t no</th>
         <th style="color:white;">Name</th>
         <th style="color:white;">Last name</th>
         <th style="color:white;">Email</th>
@@ -101,6 +102,7 @@
     <tbody>
     {% for i in a %}
       <tr>
+        <td style="color:white;">{{ i.pk }}</td>
         <td style="color:white;">{{ i.fname }}</td>
         <td style="color:white;">{{ i.lname }}</td>
         <td style="color:white;">{{ i.email }}</td>
@@ -195,6 +197,28 @@
     </tbody>
   </table>
 </div>
+</div>
+
+<div class="btn" data-toggle="collapse" data-target="#notif">Add a notification</div>
+<br>
+<br>
+
+<div id="notif" class="collapse">
+
+  <form method="post"> {% csrf_token %}
+        <div class="rform" id="reg2" style="width:100%;">
+    <label >Name</label>
+        {{ notificationsform.fname }}
+	<label >Title</label>
+        {{ notificationsform.title }}
+	<label >description</label>
+        {{ notificationsform.description }}
+            <br>
+        <div class="pbutton" id="reg3" >
+        <input type="submit" class="btn btn-primary" name="notification">
+        </div>
+        </div>
+    </form>
 
 </div>
 {% endif %}
