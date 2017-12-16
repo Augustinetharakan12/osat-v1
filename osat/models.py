@@ -87,3 +87,7 @@ class c_us_messge(models.Model):
 
 class off_registration(models.Model):
     email = models.CharField(max_length=50, null=True)
+
+class tickets(models.Model):
+    email=models.CharField(max_length=50, null=True)
+    code=models.CharField(max_length=50,null=True)

@@ -48,10 +48,18 @@ def ind(request):
 
 #people who paid
 offline_reg = off_registration.objects.all().values_list('email', flat='true')
-paid = ['rohithdas20@gmail.com', 'nainakrishnan@gmail.com', 'sumitmammen@gmail.com', 'melvin.moncey@gmail.com', 'mriduldey@gmail.com', 'allen.moncey@gmail.com', 'nishanththarakan@gmail.com', 'dhanyamelam@gmail.com', 'alangodfrey12@gmail.com', 'arunvidyasagar@gmail.com', 'njprince25@hotmail.com', 'sonellamanoj@gmail.com', 'anujgk@gmail.com', 'tharunjohn123@gmail.com', 'georgevt@outlook.com', 'charlesraj88@gmail.com']
+paid = ['rohithdas20@gmail.com', 'nainakrishnan@gmail.com', 'sumitmammen@gmail.com', 'melvin.moncey@gmail.com', 'mriduldey@gmail.com', 'allen.moncey@gmail.com', 'nishanththarakan@gmail.com', 'dhanyamelam@gmail.com', 'alangodfrey12@gmail.com', 'arunvidyasagar@gmail.com', 'njprince25@hotmail.com', 'sonellamanoj@gmail.com', 'anujgk@gmail.com', 'tharunjohn123@gmail.com', 'georgevt@outlook.com', 'charlesraj88@gmail.com','vivinabraham@gmail.com', 'zaebasgani.zg@gmail.com']
 paid += offline_reg
 paid_no=len(paid)
 
+#homecoming tickets
+paid_300=['MOJO7c15005D22253172\tmelvin.moncey@gmail.com', 'MOJO7c15005A22253535\tallen.moncey@gmail.com', 'MOJO\trohithdas20@gmail.com' ]
+paid_600=[]
+paid_900=[]
+paid_1200=[]
+paid_1500=[]
+paid_1800=[]
+paid_2100=[]
 
 
 def index(request):
@@ -314,15 +322,37 @@ def admin2notification(request):
 
 def tickets(request):
     if request.method=='POST':
-        form=view_events_form(request.POST)
-        mail = alumni.objects.all().values_list('email', flat='true')
-        if form.is_valid() and form.data['email'] in mail:
+        form=tickets_form(request.POST)
+        #mail = alumni.objects.all().values_list('email', flat='true')
+
+        unique_code=form.data['code']
+        var='\t'
+        unique_code=unique_code+var
+        unique_code=unique_code+form.data['email']
+
+        if form.is_valid() and unique_code in paid_300 or unique_code in paid_600 or unique_code in paid_900 or unique_code in paid_1200 or unique_code in paid_1500 or unique_code in paid_1800 or unique_code in paid_2100:
+
+            if unique_code in paid_300:
+                admit='1'
+            elif unique_code in paid_600:
+                admit='2'
+            elif unique_code in paid_900:
+                admit='3'
+            elif unique_code in paid_1200:
+                admit='4'
+            elif unique_code in paid_1500:
+                admit='5'
+            elif unique_code in paid_1800:
+                admit='6'
+            elif unique_code in paid_2100:
+                admit='7'
+
             alumni_email=alumni.objects.filter(email=form.data['email']).values_list('email',flat='true')
             alumni_pk=alumni.objects.filter(email=form.data['email']).values_list('pk',flat='true')
 
             #alumni_admits=alumni.objects.filter(email=form.data['email']).values_list('no_attending',flat='true')
 
-            #url1 = 'C:/Users/THARAKAN/Desktop/ticket.png'
+            #url2 = 'C:/Users/THARAKAN/Desktop/ticket.png'
             #url2='/home/django/django_project/osat/static/osat/ticket.png'
             url2='ticket.png'
 
@@ -346,7 +376,7 @@ def tickets(request):
             pk_image=str(alumni_pk[0])
 
             draw.text(xy=(40, 185), text="E-mail:"+email_image, fill=(0, 0, 0), font=font)
-            draw.text(xy=(660, 178), text="1", fill=(255, 255, 255), font=font2)
+            draw.text(xy=(660, 178), text=admit, fill=(255, 255, 255), font=font2)
             draw.text(xy=(600, 220), text="Ticket No:"+pk_image, fill=(255, 255, 255), font=font3)
 
             # image.save('C:\Users\THARAKAN\Desktop\ti2.png', 'JPEG')
@@ -359,9 +389,9 @@ def tickets(request):
 
             #return render(request,'osat/tickets.html',{'view_events_form':view_events_form,'suc':1,'reg':0})
         else:
-            return render(request, 'osat/tickets.html', {'view_events_form':view_events_form,'suc': 0, 'reg': 1})
+            return render(request, 'osat/tickets.html', {'tickets_form':tickets_form,'suc': 0, 'reg': 1})
     else:
-        return render(request, 'osat/tickets.html', {'view_events_form':view_events_form,'suc': 0, 'reg': 0})
+        return render(request, 'osat/tickets.html', {'tickets_form':tickets_form,'suc': 0, 'reg': 0})
 
 def chasing_infinity(request):
     return render(request,'osat/chasing_infinity.html')

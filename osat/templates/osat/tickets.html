@@ -3,10 +3,13 @@
 {% block body %}
 
 {% if suc == 0 %}
-    <form method="POST"> {% csrf_token %}
+<form method="POST" xmlns:max-width="http://www.w3.org/1999/xhtml"> {% csrf_token %}
         <div class="rform" id="reg2" style="width:100%;">
-    <label >Email{% if reg == 1 %}<p style="color:red;display:inline;">-Please register as an alumni first{% endif %}</p></label>
-        {{ view_events_form.email }}
+            <p>For testing ... email:rohithdas20@gmail.com code: MOJO</p>
+    <label >Email{% if reg == 1 %}<p style="color:red;display:inline;">-Please pay for the Homecoming '17 dinner coupons first (it will take 1 or 2 days for the amount to be processed{% endif %}</p></label>
+        {{ tickets_form.email }}
+    <label>Instamojo code(the code can be found in your mail)</label>
+        {{ tickets_form.code }}
             <br>
         <div class="button" id="reg3" style="text-align:center">
         <input type="submit" class="btn btn-primary">
@@ -16,4 +19,10 @@
 {% else %}
 <p>tickets coming soon :P</p>
 {% endif %}
+{% endblock %}
+
+{% block body2 %}
+<br>
+<br>
+<img src="{% static 'osat/email_code.JPG' %}" style="max-width:120%;" />
 {% endblock %}
