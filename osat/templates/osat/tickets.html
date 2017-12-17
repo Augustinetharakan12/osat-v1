@@ -17,12 +17,23 @@
         </div>
     </form>
 {% else %}
-<p>tickets coming soon :P</p>
+<img src="{% static 'osat/user_ticket.png' %}" style="max-width:100%;"/>
+<br>
+<br>
+<a href="{% static 'osat/user_ticket.png' %}" download="user_ticket.png">
+    <button type="button" class="btn btn-default btn-sm">
+        <span class="glyphicon glyphicon-download-alt">
+
+        </span> Download
+    </button>
+</a>
 {% endif %}
 {% endblock %}
 
 {% block body2 %}
+{% if suc == 0 %}
 <br>
 <br>
-<img src="{% static 'osat/email_code.JPG' %}" style="max-width:120%;" />
+<img src="{% static 'osat/email_code.JPG' %}" style="max-width:100%;" />
+{% endif %}
 {% endblock %}

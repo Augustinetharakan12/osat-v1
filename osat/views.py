@@ -48,13 +48,13 @@ def ind(request):
 
 #people who paid
 offline_reg = off_registration.objects.all().values_list('email', flat='true')
-paid = ['rohithdas20@gmail.com', 'nainakrishnan@gmail.com', 'sumitmammen@gmail.com', 'melvin.moncey@gmail.com', 'mriduldey@gmail.com', 'allen.moncey@gmail.com', 'nishanththarakan@gmail.com', 'dhanyamelam@gmail.com', 'alangodfrey12@gmail.com', 'arunvidyasagar@gmail.com', 'njprince25@hotmail.com', 'sonellamanoj@gmail.com', 'anujgk@gmail.com', 'tharunjohn123@gmail.com', 'georgevt@outlook.com', 'charlesraj88@gmail.com','vivinabraham@gmail.com', 'zaebasgani.zg@gmail.com']
+paid = ['rohithdas20@gmail.com', 'nainakrishnan@gmail.com', 'sumitmammen@gmail.com', 'melvin.moncey@gmail.com', 'mriduldey@gmail.com', 'allen.moncey@gmail.com', 'nishanththarakan@gmail.com', 'dhanyamelam@gmail.com', 'alangodfrey12@gmail.com', 'arunvidyasagar@gmail.com', 'njprince25@hotmail.com', 'sonellamanoj@gmail.com', 'anujgk@gmail.com', 'tharunjohn123@gmail.com', 'georgevt@outlook.com', 'charlesraj88@gmail.com','vivinabraham@gmail.com', 'zaebasgani.zg@gmail.com','elsalex83@gmail.com', 'snehapbijoy@gmail.com', 'swth03@gmail.com']
 paid += offline_reg
 paid_no=len(paid)
 
 #homecoming tickets
-paid_300=['MOJO7c15005D22253172\tmelvin.moncey@gmail.com', 'MOJO7c15005A22253535\tallen.moncey@gmail.com', 'MOJO\trohithdas20@gmail.com' ]
-paid_600=[]
+paid_300=['MOJO7c15005D22253172\tmelvin.moncey@gmail.com', 'MOJO7c15005A22253535\tallen.moncey@gmail.com']
+paid_600=['MOJO\trohithdas20@gmail.com']
 paid_900=[]
 paid_1200=[]
 paid_1500=[]
@@ -354,17 +354,13 @@ def tickets(request):
 
             #url2 = 'C:/Users/THARAKAN/Desktop/ticket.png'
             #url2='/home/django/django_project/osat/static/osat/ticket.png'
-            url2='ticket.png'
+
+            #same for windows and ubundu
+            url2='osat/static/osat/ticket.png'
 
             image = Image.open(url2)
 
-            #for windows
-            #font = ImageFont.truetype("arial.ttf", 20)
-            #font2 = ImageFont.truetype("arial.ttf", 30)
-            #font3 = ImageFont.truetype("arial.ttf", 20)
-            #end
-
-            #for ubuntu
+            #for windows normal... for ubundu must download arial.ttf and paste it in the directory
             font = ImageFont.truetype("arial.ttf", 20)
             font2 = ImageFont.truetype("arial.ttf", 30)
             font3 = ImageFont.truetype("arial.ttf", 20)
@@ -383,9 +379,21 @@ def tickets(request):
             # im.save(file + ".png", "JPEG")
             # end image of ticket
 
-            response = HttpResponse(content_type="image/png")
-            image.save(response,"png")
-            return response
+
+            #for windows
+            image.save('osat/static/osat/user_ticket.png')
+
+            #for ubundu server
+            #image.save('django_project/static/osat/user_ticket.png')
+
+
+
+
+            #response = HttpResponse(content_type="image/png")
+            #image.save(response,"png")
+            #return response
+
+            return render(request, 'osat/tickets.html', {'tickets_form': tickets_form, 'suc': 1, 'reg': 0})
 
             #return render(request,'osat/tickets.html',{'view_events_form':view_events_form,'suc':1,'reg':0})
         else:

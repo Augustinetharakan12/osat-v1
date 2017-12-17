@@ -3,8 +3,27 @@
 class="active"
 {% endblock %}
 {% block body %}
-<a href="{% url 'osat:a_registration' %}"><div class="btn btn-primary">students registration</div></a>
+<h1 style="color:white">Below is the process to be followed:</h1>
+<br>
+<p>
+1. You can Fill in your Name & details here.
+<br>
+Registration for Teachers is complete here.
+<br>
+But, Alumni has to do the next step for Registration to be valid.
 <br>
 <br>
-<a href="{% url 'osat:t_registration' %}"><div class="btn btn-primary">Teachers registration</div></a>
+2. For Alumni Registration payment, Please go to payments tab and pay Rs. 500 for your registration to be valid.
+<br>
+<br>
+3. After the payment for Alumni Registration is done, you can now register for Homecoming '17 by going to payments tab and selecting Homecoming '17 registration button. Here u can enter the mail id used for Alumni Registration and enter the number of people coming for the event including yourself. It is Rs.300/person for Homecoming '17 event.</p>
+<br>
+<div class="col-md-5 col-sd-5">
+    <br>
+    <a href="{% url 'osat:a_registration' %}"><div class="btn btn-primary">students registration</div></a>
+</div>
+<div class="col-md-5 col-sd-5">
+    <br>
+    <a href="{% url 'osat:t_registration' %}"><div class="btn btn-primary">Teachers registration</div></a>
+</div>
 {% endblock %}
