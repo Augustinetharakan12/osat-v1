@@ -46,10 +46,16 @@ def ind(request):
         return StreamingHttpResponse(str(rec))
     return StreamingHttpResponse('was GET')
 
-#people who paid
+#people who paid offline
 offline_reg = off_registration.objects.all().values_list('email', flat='true')
+
+#people who paid registration fee (RS 500/-)
 paid = ['rohithdas20@gmail.com', 'nainakrishnan@gmail.com', 'sumitmammen@gmail.com', 'melvin.moncey@gmail.com', 'mriduldey@gmail.com', 'allen.moncey@gmail.com', 'nishanththarakan@gmail.com', 'dhanyamelam@gmail.com', 'alangodfrey12@gmail.com', 'arunvidyasagar@gmail.com', 'njprince25@hotmail.com', 'sonellamanoj@gmail.com', 'anujgk@gmail.com', 'tharunjohn123@gmail.com', 'georgevt@outlook.com', 'charlesraj88@gmail.com','vivinabraham@gmail.com', 'zaebasgani.zg@gmail.com','elsalex83@gmail.com', 'snehapbijoy@gmail.com', 'swth03@gmail.com']
+
+#combining them both
 paid += offline_reg
+
+#total no of people who paid registration fees
 paid_no=len(paid)
 
 #homecoming tickets
@@ -61,19 +67,20 @@ paid_1500=[]
 paid_1800=[]
 paid_2100=[]
 
-
+#the main page
 def index(request):
     dn=datetime.datetime.now()
     cont_dict={'notif' : notif.objects.all().order_by('-timestamp')[:2],'submit':0,'dn':dn}
     return render(request, "osat/index.html", cont_dict)
 
-
+#about page
 def about(request):
     return render(request, "osat/about.html")
 
-def chasing_infinity(request):
-    return render(request, "osat/chasing_infinity.html")
+#def chasing_infinity(request):
+#    return render(request, "osat/chasing_infinity.html")
 
+#alumni registration
 def a_registration(request):
     paid=[]
     reg_e=alumni.objects.all().values_list('email',flat='true')
@@ -105,13 +112,15 @@ def a_registration(request):
     else:
         return render(request, "osat/a_registration.html", {'view_events_form':view_events_form,'detailsform': detailsform(),'pay':1,'notpaid':0,'reg':0,'reg_e':0})
 
-
+#events registration page
 def e_registration(request):
     return render(request,"osat/e_registration.html")
 
-def c_us(request):
-    return render(request,"osat/c_us.html")
+#contact us page
+#def c_us(request):
+#    return render(request,"osat/c_us.html")
 
+#homecoming registration
 def h_registration(request):
     if request.method == 'POST':
         form = no_attending_form(request.POST)
@@ -135,10 +144,12 @@ def h_registration(request):
             return render(request, 'osat/h_registration.html', {'no_attending_form':no_attending_form,'suc': 0,'email1':1,'noattend':0})
     else:
         return render(request,"osat/h_registration.html",{'no_attending_form':no_attending_form,'suc':0,'email1':0,'noattend':0})
+
+#event registration
 def e_registration(request):
     return render(request,"osat/e_registration.html")
 
-
+#contact us page
 def c_us(request):
     if(request.method == 'POST'):
         form=c_us_message_form(request.POST)
@@ -152,20 +163,18 @@ def c_us(request):
         return render(request,"osat/c_us.html",{'form':c_us_message_form,'v':0})
 
 
-
+#all notifications
 def notific(request):
     dn = datetime.datetime.now()
     cont_dict2 = {'notif': notif.objects.all().order_by('-timestamp'), 'dn': dn}
     return render(request, "osat/notifications.html", cont_dict2)
 
 
-
+#json sample
 def example(request):
     return JsonResponse({"data": "hello world"})
 
-
-
-
+#create event
 def ec_registration(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -197,12 +206,13 @@ def ec_registration(request):
     else:
         return render(request, "osat/ec_registration.html", {'ec_form': ec_form()})
 
-
+#register for an event
 def er_registration(request):
     a=ec
     a=a.objects.all()
     return render(request,"osat/er_registration.html",{'a':a})
 
+#event heads login page
 def el_registration(request):
     if request.method == 'POST':
         form = ec_login_form(request.POST)
@@ -216,6 +226,7 @@ def el_registration(request):
 def el_registrationpassmatch(request):
         return render(request,"osat/ec_registrationpassmatch.html")
 
+#register for an event
 def er_registration2(request, x):
     al=alumni.objects.all().values_list('email',flat='true')
     if request.method == 'POST':
@@ -233,6 +244,7 @@ def er_registration2(request, x):
     else:
         return render(request, "osat/ers_registration.html",{'alumnievent_form':alumnievent_form,'email1':0,'suc':0})
 
+#view registered events by entering the email id
 def el_registration3(request):
     if request.method == 'POST':
         form = view_events_form(request.POST)
@@ -245,6 +257,7 @@ def el_registration3(request):
     else:
         return render(request,"osat/view_events.html",{'view_events_form':view_events_form,'suc':0,'email1':0})
 
+#ADMIN
 def admin2(request):
     a=alumni
 
@@ -294,7 +307,7 @@ def admin2(request):
     else:
         return render(request,"osat/admin2.html",{'ec_login_form':ec_login_form,'suc':0,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j,'j':j,'m':m})
 
-
+#admin2 notication .. now disabled because it takes you to a new page
 def admin2notification(request):
     a = alumni
     sum_of_alumni = 0
@@ -319,7 +332,7 @@ def admin2notification(request):
     else:
         return render(request,'osat/admin2notification.html',{'notificationsform':notificationsform})
 
-
+#Tickets
 def tickets(request):
     if request.method=='POST':
         form=tickets_form(request.POST)
@@ -331,7 +344,6 @@ def tickets(request):
         unique_code=unique_code+form.data['email']
 
         if form.is_valid() and unique_code in paid_300 or unique_code in paid_600 or unique_code in paid_900 or unique_code in paid_1200 or unique_code in paid_1500 or unique_code in paid_1800 or unique_code in paid_2100:
-
             if unique_code in paid_300:
                 admit='1'
             elif unique_code in paid_600:
@@ -377,16 +389,12 @@ def tickets(request):
 
             # image.save('C:\Users\THARAKAN\Desktop\ti2.png', 'JPEG')
             # im.save(file + ".png", "JPEG")
-            # end image of ticket
-
 
             #for windows
             image.save('osat/static/osat/user_ticket.png')
 
             #for ubundu server
             #image.save('django_project/static/osat/user_ticket.png')
-
-
 
 
             #response = HttpResponse(content_type="image/png")
@@ -401,9 +409,11 @@ def tickets(request):
     else:
         return render(request, 'osat/tickets.html', {'tickets_form':tickets_form,'suc': 0, 'reg': 0})
 
+#powered by chasing infinity
 def chasing_infinity(request):
     return render(request,'osat/chasing_infinity.html')
 
+#teachers registration
 def t_registration(request):
     if request.method=='POST':
         form=t_registrationform(request.POST)
@@ -414,7 +424,6 @@ def t_registration(request):
                 if form.data['e_mail'] in registered :
                     return render(request, 'osat/t_registration.html',{'t_registration_homecomingform':view_events_form,'t_registrationform': t_registrationform, 'submit': 0,'email':1})
                 else:
-
                     a=form.save(commit="false")
                     teacher_data=teachers.objects.filter(e_mail=form.data['e_mail'])
                     teacher_details=teachers.objects.filter(e_mail=form.data['e_mail'])
@@ -433,6 +442,7 @@ def t_registration(request):
     else:
         return render(request,'osat/t_registration.html',{'t_registration_homecomingform':view_events_form,'t_registrationform':t_registrationform,'submit':0,'submit2':0})
 
+#teachers regitration for homecoming
 def t_registration_homecoming(request, email):
     teacher_details=teachers.objects.filter(pk=email)
     if request.method=='POST':
@@ -444,11 +454,14 @@ def t_registration_homecoming(request, email):
     else:
         return render(request,'osat/t_registration_homecoming.html',{'form':t_registration_homecomingform,'email':email,'teacher_details':teacher_details})
 
+#the main registration page
 def registration(request):
     return render(request,'osat/registration.html')
 
+#The main payments page
 def payments(request):
     return render(request,'osat/payments.html')
 
+#Page for donations
 def donations(request):
     return render(request,'osat/donations.html')
