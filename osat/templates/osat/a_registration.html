@@ -6,7 +6,7 @@ class="active"
 {% if pay == 1 %}
 {% if reg == 0 %}
 <div id="reg1">
-    {% if reg_e == 1 %}<div style="display:inline;color:red">You have already registered</div>{% endif %}
+    {% if reg_e == 1 %}<div style="display:inline;color:red">You have already registered.</div>{% endif %}
 <h1 style="color:#d6d6d6;text-align:center;">Alumni Registration</h1>
     <form method="post"> {% csrf_token %}
         <div class="rform" id="reg2" style="width:100%;">

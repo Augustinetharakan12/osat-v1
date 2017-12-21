@@ -1,12 +1,13 @@
 {% extends 'osat/base.html' %}
 {% load staticfiles %}
+{% block tickets %}
+class="active"
+{% endblock %}
 {% block body %}
-
 {% if suc == 0 %}
 <form method="POST" xmlns:max-width="http://www.w3.org/1999/xhtml"> {% csrf_token %}
         <div class="rform" id="reg2" style="width:100%;">
-            <p>For testing ... email:rohithdas20@gmail.com code: MOJO</p>
-    <label >Email{% if reg == 1 %}<p style="color:red;display:inline;">-Please pay for the Homecoming '17 dinner coupons first (it will take 1 or 2 days for the amount to be processed{% endif %}</p></label>
+    <label >Email{% if reg == 1 %}<p style="color:red;display:inline;">-Please pay for the Homecoming '17 dinner coupons first (it will take 1 or 2 days for the amount to be processed){% endif %}</p></label>
         {{ tickets_form.email }}
     <label>Instamojo code(the code can be found in your mail)</label>
         {{ tickets_form.code }}
@@ -17,16 +18,17 @@
         </div>
     </form>
 {% else %}
-<img src="{% static 'osat/user_ticket.png' %}" style="max-width:100%;"/>
+<img src="{% static 'osat/user_ticket.jpg' %}" style="max-width:100%;"/>
 <br>
 <br>
-<a href="{% static 'osat/user_ticket.png' %}" download="user_ticket.png">
+<a href="{% static 'osat/user_ticket.jpg' %}" download="user_ticket.jpg">
     <button type="button" class="btn btn-default btn-sm">
         <span class="glyphicon glyphicon-download-alt">
 
         </span> Download
     </button>
 </a>
+<p>Please download the ticket, it has to be shown at the entrance on the day of Homecoming event</p>
 {% endif %}
 {% endblock %}
 

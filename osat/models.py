@@ -29,6 +29,7 @@ class alumni(models.Model):
     #event=models.CharField(max_length=30,default='none')
 
     no_attending=models.IntegerField(default=0)
+    attend=models.IntegerField(default=0)
 
     def __str__(self):
         return self.fname+' '+ self.lname

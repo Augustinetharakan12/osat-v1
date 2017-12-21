@@ -2,11 +2,11 @@
 
 {% block body %}
 {% if suc == 0 %}
-<p style="color:white;">Give in your email id</p>
+<p style="color:white;">Give your email id</p>
 <form method="post" > {% csrf_token %}
         <div class="rform" id="reg2" style="width:120%;">
     <label >email{% if email1 == 1%}
-    <p style="display:inline;color:red;">- please register as an alumni</p>
+    <p style="display:inline;color:green;">- You have not registered for any event</p>
         {% endif %}
     </label>
 

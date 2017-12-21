@@ -23,20 +23,28 @@
         </div>
     </form>
 {% else %}
-<hr>
 <div class="col-md-6 col-sd-6">
 <p style="color:white;">Alumnis registered:<span class="badge">{{ sum_of_alumni }}</span></p>
 <p style="color:white;">Alumnis attending:<span class="badge">{{ sum_of_attending }}</span></p>
 <p style="color:white;">Alumni registration fee:<span class="badge">{{ paid_no }}</span></p>
+<br>
+<p>Tickets sold so far:-</p>
+<br>
+<p style="color:white;">300 ticket:<span class="badge">{{ paid_300|length }}</span></p>
+<p style="color:white;">600 ticket:<span class="badge">{{ paid_600|length }}</span></p>
+<p style="color:white;">900 ticket:<span class="badge">{{ paid_900|length }}</span></p>
+<p style="color:white;">1200 ticket:<span class="badge">{{ paid_1200|length }}</span></p>
+<p style="color:white;">1500 ticket:<span class="badge">{{ paid_1500|length }}</span></p>
+<p style="color:white;">1800 ticket:<span class="badge">{{ paid_1800|length }}</span></p>
+<p style="color:white;">2100 ticket:<span class="badge">{{ paid_2100|length }}</span></p>
+<br>
 </div>
 <div class="col-md-6 col-sd-6">
 <p style="color:white;">Teachers registered:<span class="badge">{{ teachers_registered }}</span></p>
 <p style="color:white;">Teachers attending:<span class="badge">{{ teacher_homecoming }}</span></p>
 </div>
-<br>
-<br>
-<br>
-<br>
+
+<div class="col-md-12 col-sd-12">
 <hr>
 <div class="btn" data-toggle="collapse" data-target="#demo">Registered Teachers</div>
 <br>
@@ -47,6 +55,7 @@
   <table class="table">
     <thead>
       <tr>
+          <div style="background-color:green">
         <th style="color:white;">Name</th>
         <th style="color:white;">Last name</th>
         <th style="color:white;">subject</th>
@@ -56,7 +65,7 @@
         <th style="color:white;">year resigned</th>
         <th style="color:white;">homecoming</th>
         <th style="color:white;">No </th>
-
+          </div>
 
       </tr>
     </thead>
@@ -64,7 +73,7 @@
     <ol>
     {% for i in j %}
       <tr>
-        <td style="color:white;">{{ i.fname }}</td>
+        <td style="color:white;{% if i.no_attending != 0 %}background-color:green{% endif %}">{{ i.fname }}</td>
         <td style="color:white;">{{ i.lname }}</td>
         <td style="color:white;">{{ i.subject }}</td>
         <td style="color:white;">{{ i.ph_no }}</td>
@@ -220,6 +229,7 @@
         </div>
     </form>
 
+</div>
 </div>
 {% endif %}
 

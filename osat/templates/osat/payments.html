@@ -6,6 +6,9 @@ class="active"
 {% if submit == 1 %}
     <p style="color:green">Thankyou for registering {{ name.fname }}, you can now proceed with the payments </p>
     <hr>
+{% elif submit == 2 %}
+    <p style="color:red">You have not paid the alumni registration fees.</p>
+    <hr>
 {% endif %}
 <div class="col-md-3 col-sd-3"  >
     <br>

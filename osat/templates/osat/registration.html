@@ -3,6 +3,7 @@
 class="active"
 {% endblock %}
 {% block body %}
+{% if reg_e == 2 %}<div style="display:inline;color:red">Please register as an alumni before paying for homecoming dinner coupons.</div>{% elif reg_e == 3 %}<div style="display:inline;color:red">You have paid the registration fees, but you haven't given your details, please fill up the students registration form and then pay for the homecoming dinner coupons.</div>{% endif %}
 <h1 style="color:white">Below is the process to be followed:</h1>
 <br>
 <p>
@@ -26,4 +27,9 @@ But, Alumni has to do the next step for Registration to be valid.
     <br>
     <a href="{% url 'osat:t_registration' %}"><div class="btn btn-primary">Teachers registration</div></a>
 </div>
+{% endblock %}
+{% block body2 %}
+<br>
+<p>Donations are greatly appreciated.</p>
+<a href="{% url 'osat:donations' %}"><div class="btn btn-primary">Donate</div></a>
 {% endblock %}

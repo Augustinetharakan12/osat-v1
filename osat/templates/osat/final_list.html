@@ -1,0 +1,51 @@
+{% extends 'osat/base.html' %}
+{% load staticfiles %}
+
+{% block about %}
+{% if suc == 0 %}
+<form method="post"> {% csrf_token %}
+        <div class="rform" id="reg2">
+    <label >Login id</label>
+        {{ ec_login_form.email }}
+	<label >password</label>
+        {{ ec_login_form.password }}
+        <div class="pbutton" id="reg3">
+        <input type="submit" name="adminlogin" class="btn btn-primary">
+        </div>
+        </div>
+    </form>
+{% else %}
+<h1 style="text-align:center;color:white;text-decoration:underline;font-size:80px;">Final list</h1>
+<table class="table">
+    <thead>
+      <tr>
+        <th style="color:white;">ticket no</th>
+        <th style="color:white;">Name</th>
+        <th style="color:white;">Last name</th>
+        <th style="color:white;">Email</th>
+        <th style="color:white;">Phone</th>
+        <th style="color:white;">passout</th>
+        <th style="color:white;">admit</th>
+        <th style="color:white;">inside</th>
+
+      </tr>
+    </thead>
+    <tbody>
+    {% for i in final_list_details %}
+      <tr>
+        <td style="color:white;">{{ i.pk }}</td>
+        <td style="color:white;background-color:{% if i.attend == 0 %}green{% elif i.attend == 1 %}blue{% endif %}">{{ i.fname }}</td>
+        <td style="color:white;background-color:{% if i.attend == 0 %}green{% elif i.attend == 1 %}blue{% endif %}">{{ i.lname }}</td>
+        <td style="color:white;background-color:{% if i.attend == 0 %}green{% elif i.attend == 1 %}blue{% endif %}">{{ i.email }}</td>
+        <td style="color:white;background-color:{% if i.attend == 0 %}green{% elif i.attend == 1 %}blue{% endif %}">{{ i.phno }}</td>
+        <td style="color:white;background-color:{% if i.attend == 0 %}green{% elif i.attend == 1 %}blue{% endif %}">{{ i.year_pass }}</td>
+        <td style="color:white;background-color:{% if i.attend == 0 %}green{% elif i.attend == 1 %}blue{% endif %}">{{ i.no_attending }}</td>
+        <td style="color:white;"><a {% if i.attend == 0 %}href="{% url 'osat:final_list_attend' i.pk %}"{% endif %}><span class="glyphicon glyphicon-circle-arrow-right"></span></a></td>
+
+      </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<!--<a href="{% url 'osat:final_list_attend' 3291096 %}"><div class="btn btn-primary">RESET</div></a>-->
+{% endif %}
+{% endblock %}

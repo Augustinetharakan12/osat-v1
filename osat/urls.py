@@ -19,7 +19,7 @@ urlpatterns = [
     url(r'^payments/$', views.payments, name='payments'),
     url(r'^donations/$', views.donations, name='donations'),
     url(r'^notifications/$', views.notific, name='notific'),
-    url(r'^example/$', views.example, name='example'),
+    url(r'^json_sending/$', views.example, name='example'),
 
 
     url(r'^ec_registration/$', views.ec_registration, name='ec_registration'),
@@ -31,6 +31,8 @@ urlpatterns = [
 
 
     url(r'^admin2/$', views.admin2, name='admin2'),
+    url(r'^admin2/final_list$', views.final_list, name='final_list'),
+    url(r'^admin2/final_list/(?P<pk>[0-9]+)$', views.final_list_attend, name='final_list_attend'),
     url(r'^admin2notification/$', views.admin2notification, name='admin2notification'),
 
     url(r'^tickets/$', views.tickets, name='tickets'),
