@@ -3,6 +3,7 @@
 class="active"
 {% endblock %}
 {% block about %}
+{% if suc == 0 %}
 {% if submit == 1 %}
     <p style="color:green">Thankyou for registering {{ name.fname }}, you can now proceed with the payments </p>
     <hr>
@@ -14,14 +15,22 @@ class="active"
     <br>
     <p>Registration fee Rs 500/-</p>
     <br>
-    <br>
-    <br>
-    <br>
-<a href="https://imjo.in/hdgDAb"><div class="btn btn-primary">Alumni Registration</div></a>
+<!--<a href="https://imjo.in/hdgDAb"><div class="btn btn-primary">Alumni Registration</div></a>-->
+    <form method="post"> {% csrf_token %}
+        <div class="rform" id="reg2" style="width:100%;">
+    <label >Email</label>
+        {{ view_events_form.email }}
+            <br>
+        <div  class="button" id="reg3" style="text-align:center">
+        <input type="submit" class="btn btn-primary" name="registration_fee">
+        </div>
+        </div>
+    </form>
     <br>
     <br>
 
 </div>
+<!--
 <div class="col-md-1 col-sd-1" ></div>
 <div class="col-md-6 col-sd-6">
     <br>
@@ -32,4 +41,23 @@ class="active"
     <br>
     <br>
 </div>
+-->
+{% elif suc == 1 %}
+<h1>Registration fee Rs.500/-</h1>
+<br>
+<br>
+<p>Name:{{ alumni_details.fname }}</p>
+<p>E-mail{{ alumni_details.email }}</p>
+<p>Phone NO:{{ alumni_details.phno }}</p>
+<br>
+<br>
+<a href={{ link }}><div class="btn btn-primary">Pay now</div></a>
+{% elif suc == 2 %}
+<h1>your payment was successful</h1>
+<h2>Details</h2>
+<p>Name:{{ alumni_details.fname }}</p>
+<p>E-mail{{ alumni_details.email }}</p>
+<p>Phone NO:{{ alumni_details.phno }}</p>
+<p>Registration fee paid:Rs.500/-</p>
+{% endif %}
 {% endblock %}
