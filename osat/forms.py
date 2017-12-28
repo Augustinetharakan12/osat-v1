@@ -128,3 +128,14 @@ class tickets_form(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class':'form-control',
             })
+
+class offline_tickets_form(forms.ModelForm):
+    class Meta:
+        model=tickets_offline
+        fields=('email','no_attending')
+    def __init__(self,*args, **kwargs):
+        super(offline_tickets_form,self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class':'form-control',
+            })

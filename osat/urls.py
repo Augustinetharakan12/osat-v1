@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^admin2/$', views.admin2, name='admin2'),
     url(r'^admin2/final_list$', views.final_list, name='final_list'),
     url(r'^admin2/final_list/(?P<pk>[0-9]+)$', views.final_list_attend, name='final_list_attend'),
+    url(r'^admin2/offline_registration$', views.offline_registration, name='offline_registration'),
     url(r'^admin2notification/$', views.admin2notification, name='admin2notification'),
 
     url(r'^tickets/$', views.tickets, name='tickets'),

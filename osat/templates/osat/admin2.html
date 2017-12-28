@@ -230,7 +230,41 @@
     </form>
 
 </div>
+
+<!--donations-->
+<div class="btn" data-toggle="collapse" data-target="#donations">Donations</div>
+<br>
+<br>
+
+<div id="donations" class="collapse">
+   <div class="container" style="width:900px;">
+  <table class="table">
+    <thead>
+      <tr>
+          <div style="background-color:green">
+        <th style="color:white;">Email</th>
+          </div>
+
+      </tr>
+    </thead>
+    <tbody>
+    <ol>
+    {% for i in donations %}
+      <tr>
+        <td style="color:white;">{{ i }}</td>
+      </tr>
+    {% endfor %}
+    </ol>
+    </tbody>
+  </table>
 </div>
+
+</div>
+
+<!--end of donations-->
+
+</div>
+
 {% endif %}
 
 {% endblock %}

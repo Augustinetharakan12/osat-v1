@@ -3,6 +3,7 @@
 class="active"
 {% endblock %}
 {% block body %}
+{% if suc == 0 %}
 <br>
 <p style="text-align:center;">Cheque/DD to be drawn in favour of : Old Students Association of TocH (OSAT)
 <br>
@@ -20,17 +21,30 @@ IFSC Code:SIBL0000417</p>
 <br>
 <hr>
 <br>
+<h1 style="color:white">Make donations online</h1>
+<form method="post"> {% csrf_token %}
+        <div class="rform" id="reg2" style="width:100%;">
+    <label >Email:</label>
+        {{ view_events_form.email }}
+            <br>
+        <div  class="button" name="a_registration" id="reg3" style="text-align:center">
+        <input type="submit" class="btn btn-primary" name="a_registration">
+        </div>
+        </div>
+    </form>
+{% else %}
+<h1 style="color:white;text-align:center">How much would you like to donate {{ name }}?</h1>
 <div class="col-md-4 col-sd-4" style="text-align:center;">
     <br>
     <a href="https://imjo.in/78dPT5"><div class="btn btn-primary" class="btn" >Rs.1,000/-</div></a>
 </div>
 <div class="col-md-4 col-sd-4" style="text-align:center;">
     <br>
-    <a href="https://imjo.in/rX9SEe"><div class="btn btn-primary">Rs.5,000/-</div></a>
+    <a href="https://imjo.in/va8eFf"><div class="btn btn-primary">Rs.2,000/-</div></a>
 </div>
 <div class="col-md-4 col-sd-4" style="text-align:center;">
     <br>
-    <a href="https://imjo.in/va8eFf"><div class="btn btn-primary">Rs.2,000/-</div></a>
+    <a href="https://imjo.in/rX9SEe"><div class="btn btn-primary">Rs.5,000/-</div></a>
 </div>
 <div class="col-md-6 col-sd-6" style="text-align:center;">
     <br>
@@ -42,7 +56,7 @@ IFSC Code:SIBL0000417</p>
     <br>
     <a href="https://imjo.in/nKBsHz"><div class="btn btn-primary">Rs.25,000/-</div></a>
 </div>
-
+{% endif %}
 {% endblock %}
 {% block body2 %}
 <div class="col-md-2 col-sd-2" ></div>
@@ -50,9 +64,12 @@ IFSC Code:SIBL0000417</p>
 <h1 style="font-size:25px;color:white">People who donated</h1>
 <div class="scroll" >
     <ol>
+        <li>Mr. Mohan Mathew</li>
+        <li>Mr. Rahul Das K</li>
         <li>Mr. Akshay Agarwal</li>
         <li>Mr. Joseph Simon</li>
         <li>Mrs. Jovie Katticaran,<br>Ms. Julu Katticaran, <br>Mr. Joel Katticaran</li>
+        <li>Mrs. Sonella Joy</li>
     </ol>
 </div>
 

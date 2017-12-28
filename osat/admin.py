@@ -7,4 +7,4 @@ admin.site.register(alumnievent)
 admin.site.register(teachers)
 admin.site.register(c_us_messge)
 admin.site.register(off_registration)
-
+admin.site.register(tickets_offline)

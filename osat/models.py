@@ -7,8 +7,6 @@ CHOICES = (
     ('No', 'No'),
     ('Maybe','Maybe'),
 )
-
-
 class alumni(models.Model):
     fname=models.CharField(max_length=200,null=True)
     lname=models.CharField(max_length=200,null=True)
@@ -64,11 +62,13 @@ class ec(models.Model):
     event=models.CharField(max_length=50,null=True)
     def __str__(self):
         return ' '+ self.email+' '+self.event
+
 class ec_login(models.Model):
     email=models.CharField(max_length=50,null=True)
     password=models.CharField(max_length=50,null=True)
     def __str__(self):
         return ' '+ self.email+' '+self.password
+
 class alumnievent(models.Model):
     email=models.CharField(max_length=50,null=True)
     event=models.CharField(max_length=50,default='None')
@@ -92,3 +92,7 @@ class off_registration(models.Model):
 class tickets(models.Model):
     email=models.CharField(max_length=50, null=True)
     code=models.CharField(max_length=50,null=True)
+
+class tickets_offline(models.Model):
+    email = models.CharField(max_length=50, null=True)
+    no_attending = models.IntegerField(null=True)

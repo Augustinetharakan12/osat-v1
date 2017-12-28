@@ -33,9 +33,9 @@
     <tbody>
     {% for i in final_list_details %}
       <tr>
-        <td style="color:white;">{{ i.pk }}</td>
-        <td style="color:white;background-color:{% if i.attend == 0 %}green{% elif i.attend == 1 %}blue{% endif %}">{{ i.fname }}</td>
-        <td style="color:white;background-color:{% if i.attend == 0 %}green{% elif i.attend == 1 %}blue{% endif %}">{{ i.lname }}</td>
+        <td style="color:white;background-color:{% if i.no_attending == -1 %}Brown{% elif i.attend == 0 %}green{% elif i.attend == 1 %}blue{% endif %}">{{ i.pk }}</td>
+        <td style="color:white;background-color:{% if i.no_attending == -1 %}Brown{% elif i.attend == 0 %}green{% elif i.attend == 1 %}blue{% endif %}">{{ i.fname }}</td>
+        <td style="color:white;background-color:{% if i.no_attending == -1 %}Brown{% elif i.attend == 0 %}green{% elif i.attend == 1 %}blue{% endif %}">{{ i.lname }}</td>
         <td style="color:white;background-color:{% if i.attend == 0 %}green{% elif i.attend == 1 %}blue{% endif %}">{{ i.email }}</td>
         <td style="color:white;background-color:{% if i.attend == 0 %}green{% elif i.attend == 1 %}blue{% endif %}">{{ i.phno }}</td>
         <td style="color:white;background-color:{% if i.attend == 0 %}green{% elif i.attend == 1 %}blue{% endif %}">{{ i.year_pass }}</td>

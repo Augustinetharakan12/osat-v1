@@ -1,8 +1,9 @@
-
 import datetime
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 
+
+#for images
 from PIL import Image, ImageDraw, ImageFont
 
 #import mime
@@ -98,6 +99,8 @@ paid_1500_emails=[]
 paid_1800_emails=[]
 paid_2100_emails=[]
 
+donations_email=[]
+
 #row[0]=mojocode
 #row[4]=emailid
 #row[7]=amount
@@ -109,6 +112,9 @@ with open('osat/static/osat/paid_csv.csv') as csvfile:
                 if (row[2] == 'OSAT REGISTRATION'):
                     temp=[row[4]]
                     paid=paid+temp
+                elif row[2] == 'Donation':
+                    temp=[row[4]+'\t'+row[7]]
+                    donations_email=donations_email+temp
                 else:
                     if(float(row[7])>300 and float(row[7])<350):
                         temp=[row[0]+'\t'+row[4]]
@@ -139,8 +145,9 @@ with open('osat/static/osat/paid_csv.csv') as csvfile:
                         paid_2100 = paid_2100 + temp
                         paid_2100_emails = paid_2100_emails + [row[4]]
             #print(row[0]+'\t'+row[4])
-paid+=offline_reg
+paid += offline_reg
 paid_no = len(paid)
+#end of csv file
 
 #the main page
 def index(request):
@@ -195,19 +202,140 @@ def e_registration(request):
 #    return render(request,"osat/c_us.html")
 
 #homecoming registration
-def h_registration(request):
+def h_registration(request,):
+
+
+    #updates the paid list instantly
+    # CSV file
+
+    #offline registrations list
+
+    offline_reg = off_registration.objects.all().values_list('email',flat='true')
+    offline_tickets=tickets_offline.objects.all()
+
+    paid = []
+    paid_300 = []
+    paid_600 = []
+    paid_900 = []
+    paid_1200 = []
+    paid_1500 = []
+    paid_1800 = []
+    paid_2100 = []
+
+    # emails of all of the people who paid for the tickets
+    paid_300_emails = []
+    paid_600_emails = []
+    paid_900_emails = []
+    paid_1200_emails = []
+    paid_1500_emails = []
+    paid_1800_emails = []
+    paid_2100_emails = []
+
+    donations_email = []
+
+    # row[0]=mojocode
+    # row[4]=emailid
+    # row[7]=amount
+    with open('osat/static/osat/paid_csv.csv') as csvfile:
+        s = csv.reader(csvfile, delimiter=',')
+        for row in s:
+            if (len(row) > 7):
+                if (row[0] != 'Payment ID'):
+                    if (row[2] == 'OSAT REGISTRATION'):
+                        temp = [row[4]]
+                        paid = paid + temp
+                    elif row[2] == 'Donation':
+                        temp = [row[4] + '\t' + row[7]]
+                        donations_email = donations_email + temp
+                    else:
+                        if (float(row[7]) > 300 and float(row[7]) < 350):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_300 = paid_300 + temp
+                            paid_300_emails = paid_300_emails + [row[4]]
+                        elif (float(row[7]) > 600 and float(row[7]) < 650):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_600 = paid_600 + temp
+                            paid_600_emails = paid_600_emails + [row[4]]
+                        elif (float(row[7]) > 900 and float(row[7]) < 950):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_900 = paid_900 + temp
+                            paid_900_emails = paid_900_emails + [row[4]]
+                        elif (float(row[7]) > 1200 and float(row[7]) < 1250):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_1200 = paid_1200 + temp
+                            paid_1200_emails = paid_1200_emails + [row[4]]
+                        elif (float(row[7]) > 1500 and float(row[7]) < 1550):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_1500 = paid_1500 + temp
+                            paid_1500_emails = paid_1500_emails + [row[4]]
+                        elif (float(row[7]) > 1800 and float(row[7]) < 1850):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_1800 = paid_1800 + temp
+                            paid_1800_emails = paid_1800_emails + [row[4]]
+                        elif (float(row[7]) > 2100 and float(row[7]) < 2250):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_2100 = paid_2100 + temp
+                            paid_2100_emails = paid_2100_emails + [row[4]]
+                            # print(row[0]+'\t'+row[4])
+
+    #to include the offline registraitons email with the paid list
+    for i in offline_reg:
+        paid=paid+[i]
+    #for updating the main list with the offline tickets
+    alumni.objects.all().update(no_attending='0')
+
+    for i in paid:
+        alumni.objects.filter(email=i).update(no_attending='-1')
+
+    for i in paid_300_emails:
+        alumni.objects.filter(email=i).update(no_attending='1')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_300_emails)
+    # tickets_paid_alumni_details.update(no_attending=1)
+
+    for i in paid_600_emails:
+        alumni.objects.filter(email=i).update(no_attending='2')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_600_emails)
+    # tickets_paid_alumni_details.update(no_attending=2)
+
+    for i in paid_900_emails:
+        alumni.objects.filter(email=i).update(no_attending='3')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_900_emails)
+    # tickets_paid_alumni_details.update(no_attending=3)
+
+    for i in paid_1200_emails:
+        alumni.objects.filter(email=i).update(no_attending='4')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_1200_emails)
+    # tickets_paid_alumni_details.update(no_attending=4)
+
+    for i in paid_1500_emails:
+        alumni.objects.filter(email=i).update(no_attending='5')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_1500_emails)
+    # tickets_paid_alumni_details.update(no_attending=5)
+
+    for i in paid_1800_emails:
+        alumni.objects.filter(email=i).update(no_attending='6')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_1800_emails)
+    # tickets_paid_alumni_details.update(no_attending=6)
+
+    for i in paid_2100_emails:
+        alumni.objects.filter(email=i).update(no_attending='7')
+        # tickets_paid_alumni_details.objects.filter('email' in paid_2100_emails)
+        # tickets_paid_alumni_details.update(no_attending=7)
+    paid_no = len(paid)
+
+    for i in offline_tickets:
+        alumni.objects.filter(email=i.email).update(no_attending=i.no_attending)
+
+
+    paid_no = len(paid)
+    # end of csv file
+
     if request.method == 'POST':
         form = no_attending_form(request.POST)
         mail = alumni.objects.all().values_list('email', flat='true')
         if form.is_valid():
             alumni_emails=alumni.objects.all().values_list('email',flat='true')
-            if form.data['email'] not in alumni_emails and form.data['email'] in paid:
-                return render(request, "osat/registration.html",{'view_events_form': view_events_form, 'detailsform': detailsform(), 'pay': 1,'notpaid': 0, 'reg': 0, 'reg_e': 3})
-            elif form.data['email'] not in alumni_emails :
-                return render(request, "osat/registration.html",{'view_events_form': view_events_form, 'detailsform': detailsform(), 'pay': 1,'notpaid': 0, 'reg': 0, 'reg_e': 2})
-            elif form.data['email'] not in paid:
-                return render(request, 'osat/h_registration.html',{'no_attending_form': no_attending_form, 'suc': 0, 'email1': 2, 'noattend': 0})
-            elif form.data['email'] in mail :
+            if form.data['email'] in alumni_emails and form.data['email'] in paid:
                 a=alumni.objects.filter(email=form.data['email'])
                 a.update(no_attending=form.data['no_attending'])
                 no=int(form.data['no_attending'])
@@ -216,9 +344,15 @@ def h_registration(request):
                     return render(request, "osat/h_registration.html",{'no_attending_form': no_attending_form, 'suc': 1, 'email1': 0,'cost':cost})
                 else:
                     return render(request, 'osat/h_registration.html',{'no_attending_form': no_attending_form, 'suc': 0, 'email1': 0,'noattend':1})
+            #return render(request,'osat/h_registration.html', {'no_attending_form':no_attending_form,'suc':1,'email1':0})
+            elif form.data['email'] not in alumni_emails and form.data['email'] in paid:
+                return render(request, "osat/registration.html",{'view_events_form': view_events_form, 'detailsform': detailsform(), 'pay': 1,'notpaid': 0, 'reg': 0, 'reg_e': 3})
+            elif form.data['email'] not in alumni_emails :
+                return render(request, "osat/registration.html",{'view_events_form': view_events_form, 'detailsform': detailsform(), 'pay': 1,'notpaid': 0, 'reg': 0, 'reg_e': 2})
+            elif form.data['email'] not in paid:
+                return render(request, 'osat/h_registration.html',{'no_attending_form': no_attending_form, 'suc': 0, 'email1': 2, 'noattend': 0})
             else:
                 return render(request, 'osat/h_registration.html',{'no_attending_form': no_attending_form, 'suc': 0, 'email1': 1, 'noattend': 0})
-            #return render(request,'osat/h_registration.html', {'no_attending_form':no_attending_form,'suc':1,'email1':0})
         else:
             return render(request, 'osat/h_registration.html', {'no_attending_form':no_attending_form,'suc': 0,'email1':1,'noattend':0})
     else:
@@ -345,7 +479,88 @@ def el_registration3(request):
 
 #ADMIN
 def admin2(request):
-    payment_details={'paid':paid,'paid_300':paid_300,'paid_600':paid_600,'paid_900':paid_900,'paid_1200':paid_1200,'paid_1500':paid_1500,'paid_1800':paid_1800,'paid_2100':paid_2100}
+    #payment_details={'paid':paid,'paid_300':paid_300,'paid_600':paid_600,'paid_900':paid_900,'paid_1200':paid_1200,'paid_1500':paid_1500,'paid_1800':paid_1800,'paid_2100':paid_2100}
+
+    # updates the paid list instantly
+    # CSV file
+
+    # offline registrations list
+
+    offline_reg = off_registration.objects.all().values_list('email', flat='true')
+    offline_tickets=tickets_offline.objects.all()
+
+    paid = []
+    paid_300 = []
+    paid_600 = []
+    paid_900 = []
+    paid_1200 = []
+    paid_1500 = []
+    paid_1800 = []
+    paid_2100 = []
+
+    # emails of all of the people who paid for the tickets
+    paid_300_emails = []
+    paid_600_emails = []
+    paid_900_emails = []
+    paid_1200_emails = []
+    paid_1500_emails = []
+    paid_1800_emails = []
+    paid_2100_emails = []
+
+    donations_email = []
+
+    # row[0]=mojocode
+    # row[4]=emailid
+    # row[7]=amount
+    with open('osat/static/osat/paid_csv.csv') as csvfile:
+        s = csv.reader(csvfile, delimiter=',')
+        for row in s:
+            if (len(row) > 7):
+                if (row[0] != 'Payment ID'):
+                    if (row[2] == 'OSAT REGISTRATION'):
+                        temp = [row[4]]
+                        paid = paid + temp
+                    elif row[2] == 'Donation':
+                        temp = [row[4] + '\t' + row[7]]
+                        donations_email = donations_email + temp
+                    else:
+                        if (float(row[7]) > 300 and float(row[7]) < 350):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_300 = paid_300 + temp
+                            paid_300_emails = paid_300_emails + [row[4]]
+                        elif (float(row[7]) > 600 and float(row[7]) < 650):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_600 = paid_600 + temp
+                            paid_600_emails = paid_600_emails + [row[4]]
+                        elif (float(row[7]) > 900 and float(row[7]) < 950):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_900 = paid_900 + temp
+                            paid_900_emails = paid_900_emails + [row[4]]
+                        elif (float(row[7]) > 1200 and float(row[7]) < 1250):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_1200 = paid_1200 + temp
+                            paid_1200_emails = paid_1200_emails + [row[4]]
+                        elif (float(row[7]) > 1500 and float(row[7]) < 1550):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_1500 = paid_1500 + temp
+                            paid_1500_emails = paid_1500_emails + [row[4]]
+                        elif (float(row[7]) > 1800 and float(row[7]) < 1850):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_1800 = paid_1800 + temp
+                            paid_1800_emails = paid_1800_emails + [row[4]]
+                        elif (float(row[7]) > 2100 and float(row[7]) < 2250):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_2100 = paid_2100 + temp
+                            paid_2100_emails = paid_2100_emails + [row[4]]
+                            # print(row[0]+'\t'+row[4])
+
+    #to include the emails of offline registered with the online
+    for i in offline_reg:
+        paid=paid+[i]
+
+    paid_no = len(paid)
+    # end of csv file
+
 
     a=alumni
 
@@ -367,6 +582,9 @@ def admin2(request):
     teachers_registered=0
 
     alumni.objects.all().update(no_attending='0')
+
+    for i in paid:
+        alumni.objects.filter(email=i).update(no_attending='-1')
 
     for i in paid_300_emails:
         alumni.objects.filter(email=i).update(no_attending='1')
@@ -403,12 +621,18 @@ def admin2(request):
     #tickets_paid_alumni_details.objects.filter('email' in paid_2100_emails)
     #tickets_paid_alumni_details.update(no_attending=7)
 
+
+    #offline registration tickets updating
+    for i in offline_tickets:
+        alumni.objects.filter(email=i.email).update(no_attending=i.no_attending)
+
     for i in j:
         teachers_registered+=1
         teacher_homecoming+=i.no_attending
     for i in a:
         sum_of_alumni=sum_of_alumni+1
-        sum_of_attending=sum_of_attending+i.no_attending
+        if(i.no_attending!=-1):
+            sum_of_attending=sum_of_attending+i.no_attending
     id="osatadmin"
     passw="osat12345"
     if request.method=='POST':
@@ -417,17 +641,18 @@ def admin2(request):
         form3 = notificationsform(request.POST)
         if 'adminlogin' in request.POST:
             if form1.is_valid() and form1.data['email'] == id and form1.data['password'] == passw:
-                return render(request,'osat/admin2.html',{'ec_login_form':ec_login_form ,'suc':1,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j,'m':m,'off_reg':off_registration_form,'off_reg_details':off_reg_details,'teachers_registered':teachers_registered,'teacher_homecoming':teacher_homecoming,'paid':paid,'paid_no':paid_no,'notificationsform': notificationsform,'paid_300':paid_300,'paid_600':paid_600,'paid_900':paid_900,'paid_1200':paid_1200,'paid_1500':paid_1500,'paid_1800':paid_1800,'paid_2100':paid_2100})
+                return render(request,'osat/admin2.html',{'ec_login_form':ec_login_form ,'suc':1,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j,'m':m,'off_reg':off_registration_form,'off_reg_details':off_reg_details,'teachers_registered':teachers_registered,'teacher_homecoming':teacher_homecoming,'paid':paid,'paid_no':paid_no,'notificationsform': notificationsform,'paid_300':paid_300,'paid_600':paid_600,'paid_900':paid_900,'paid_1200':paid_1200,'paid_1500':paid_1500,'paid_1800':paid_1800,'paid_2100':paid_2100,'donations':donations_email})
             else:
-                return render(request, 'osat/admin2.html', {'ec_login_form': ec_login_form, 'suc': 0,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j,'j':j,'m':m,'off_reg':off_registration_form,'off_reg_details':off_reg_details,'notificationsform': notificationsform})
+                return render(request, 'osat/admin2.html', {'ec_login_form': ec_login_form, 'suc': 0,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j,'j':j,'m':m,'off_reg':off_registration_form,'off_reg_details':off_reg_details,'notificationsform': notificationsform,'donations':donations_email})
         elif 'off_reg' in request.POST:
             if form2.is_valid():
                 c=form2.save()
-                return render(request, 'osat/admin2.html',{'ec_login_form': ec_login_form, 'suc': 1, 'a': a, 'sum_of_alumni': sum_of_alumni,'sum_of_attending': sum_of_attending, 'j': j, 'm': m, 'off_reg': off_registration_form,'off_reg_details':off_reg_details,'teachers_registered':teachers_registered,'teacher_homecoming':teacher_homecoming,'paid':paid,'paid_no':paid_no,'notificationsform': notificationsform,'paid_300':paid_300,'paid_600':paid_600,'paid_900':paid_900,'paid_1200':paid_1200,'paid_1500':paid_1500,'paid_1800':paid_1800,'paid_2100':paid_2100})
+                alumni.objects.filter(email=form2.data['email']).update(no_attending=-1)
+                return render(request, 'osat/admin2.html',{'ec_login_form': ec_login_form, 'suc': 1, 'a': a, 'sum_of_alumni': sum_of_alumni,'sum_of_attending': sum_of_attending, 'j': j, 'm': m, 'off_reg': off_registration_form,'off_reg_details':off_reg_details,'teachers_registered':teachers_registered,'teacher_homecoming':teacher_homecoming,'paid':paid,'paid_no':paid_no,'notificationsform': notificationsform,'paid_300':paid_300,'paid_600':paid_600,'paid_900':paid_900,'paid_1200':paid_1200,'paid_1500':paid_1500,'paid_1800':paid_1800,'paid_2100':paid_2100,'donations':donations_email})
         elif 'notification' in request.POST:
             if form3.is_valid():
                 form3.save()
-                return render(request, 'osat/admin2.html',{'ec_login_form': ec_login_form, 'suc': 1, 'a': a, 'sum_of_alumni': sum_of_alumni,'sum_of_attending': sum_of_attending, 'j': j, 'm': m, 'off_reg': off_registration_form,'off_reg_details': off_reg_details,'teachers_registered':teachers_registered,'teacher_homecoming':teacher_homecoming,'paid':paid,'paid_no':paid_no, 'notificationsform': notificationsform,'paid_300':paid_300,'paid_600':paid_600,'paid_900':paid_900,'paid_1200':paid_1200,'paid_1500':paid_1500,'paid_1800':paid_1800,'paid_2100':paid_2100})
+                return render(request, 'osat/admin2.html',{'ec_login_form': ec_login_form, 'suc': 1, 'a': a, 'sum_of_alumni': sum_of_alumni,'sum_of_attending': sum_of_attending, 'j': j, 'm': m, 'off_reg': off_registration_form,'off_reg_details': off_reg_details,'teachers_registered':teachers_registered,'teacher_homecoming':teacher_homecoming,'paid':paid,'paid_no':paid_no, 'notificationsform': notificationsform,'paid_300':paid_300,'paid_600':paid_600,'paid_900':paid_900,'paid_1200':paid_1200,'paid_1500':paid_1500,'paid_1800':paid_1800,'paid_2100':paid_2100,'donations':donations_email})
             else :
                 return HttpResponse('Invalid')
     else:
@@ -460,6 +685,127 @@ def admin2notification(request):
 
 #Tickets
 def tickets(request):
+    # updates the paid list instantly
+    # CSV file
+
+    # offline registrations list
+    offline_reg = off_registration.objects.all().values_list('email', flat='true')
+    offline_tickets=tickets_offline.objects.all()
+
+    paid = []
+    paid_300 = []
+    paid_600 = []
+    paid_900 = []
+    paid_1200 = []
+    paid_1500 = []
+    paid_1800 = []
+    paid_2100 = []
+
+    # emails of all of the people who paid for the tickets
+    paid_300_emails = []
+    paid_600_emails = []
+    paid_900_emails = []
+    paid_1200_emails = []
+    paid_1500_emails = []
+    paid_1800_emails = []
+    paid_2100_emails = []
+
+    donations_email = []
+
+    # row[0]=mojocode
+    # row[4]=emailid
+    # row[7]=amount
+    with open('osat/static/osat/paid_csv.csv') as csvfile:
+        s = csv.reader(csvfile, delimiter=',')
+        for row in s:
+            if (len(row) > 7):
+                if (row[0] != 'Payment ID'):
+                    if (row[2] == 'OSAT REGISTRATION'):
+                        temp = [row[4]]
+                        paid = paid + temp
+                    elif row[2] == 'Donation':
+                        temp = [row[4] + '\t' + row[7]]
+                        donations_email = donations_email + temp
+                    else:
+                        if (float(row[7]) > 300 and float(row[7]) < 350):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_300 = paid_300 + temp
+                            paid_300_emails = paid_300_emails + [row[4]]
+                        elif (float(row[7]) > 600 and float(row[7]) < 650):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_600 = paid_600 + temp
+                            paid_600_emails = paid_600_emails + [row[4]]
+                        elif (float(row[7]) > 900 and float(row[7]) < 950):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_900 = paid_900 + temp
+                            paid_900_emails = paid_900_emails + [row[4]]
+                        elif (float(row[7]) > 1200 and float(row[7]) < 1250):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_1200 = paid_1200 + temp
+                            paid_1200_emails = paid_1200_emails + [row[4]]
+                        elif (float(row[7]) > 1500 and float(row[7]) < 1550):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_1500 = paid_1500 + temp
+                            paid_1500_emails = paid_1500_emails + [row[4]]
+                        elif (float(row[7]) > 1800 and float(row[7]) < 1850):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_1800 = paid_1800 + temp
+                            paid_1800_emails = paid_1800_emails + [row[4]]
+                        elif (float(row[7]) > 2100 and float(row[7]) < 2250):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_2100 = paid_2100 + temp
+                            paid_2100_emails = paid_2100_emails + [row[4]]
+                            # print(row[0]+'\t'+row[4])
+
+    # end of csv file
+
+    for i in offline_reg:
+        paid=paid+[i]
+
+    alumni.objects.all().update(no_attending='0')
+
+    for i in paid:
+        alumni.objects.filter(email=i).update(no_attending='-1')
+
+    for i in paid_300_emails:
+        alumni.objects.filter(email=i).update(no_attending='1')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_300_emails)
+    # tickets_paid_alumni_details.update(no_attending=1)
+
+    for i in paid_600_emails:
+        alumni.objects.filter(email=i).update(no_attending='2')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_600_emails)
+    # tickets_paid_alumni_details.update(no_attending=2)
+
+    for i in paid_900_emails:
+        alumni.objects.filter(email=i).update(no_attending='3')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_900_emails)
+    # tickets_paid_alumni_details.update(no_attending=3)
+
+    for i in paid_1200_emails:
+        alumni.objects.filter(email=i).update(no_attending='4')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_1200_emails)
+    # tickets_paid_alumni_details.update(no_attending=4)
+
+    for i in paid_1500_emails:
+        alumni.objects.filter(email=i).update(no_attending='5')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_1500_emails)
+    # tickets_paid_alumni_details.update(no_attending=5)
+
+    for i in paid_1800_emails:
+        alumni.objects.filter(email=i).update(no_attending='6')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_1800_emails)
+    # tickets_paid_alumni_details.update(no_attending=6)
+
+    for i in paid_2100_emails:
+        alumni.objects.filter(email=i).update(no_attending='7')
+        # tickets_paid_alumni_details.objects.filter('email' in paid_2100_emails)
+        # tickets_paid_alumni_details.update(no_attending=7)
+    paid_no = len(paid)
+
+    for i in offline_tickets:
+        alumni.objects.filter(email=i.email).update(no_attending=i.no_attending)
+
     if request.method=='POST':
         form=tickets_form(request.POST)
         #mail = alumni.objects.all().values_list('email', flat='true')
@@ -597,13 +943,148 @@ def payments(request):
 
 #Page for donations
 def donations(request):
-    return render(request,'osat/donations.html')
+    alumni_emails=alumni.objects.all().values_list('email',flat='true')
+    if(request.method=='POST'):
+        form=view_events_form(request.POST)
+        if(form.is_valid):
+            if(form.data['email'] in alumni_emails):
+                name=alumni.objects.filter(email=form.data['email']).values_list('fname',flat='true')
+                return render(request, 'osat/donations.html', {'suc': 1,'view_events_form': view_events_form,'name':name[0]})
+            else:
+                return render(request, "osat/registration.html",{'view_events_form': view_events_form, 'detailsform': detailsform(), 'pay': 1,'notpaid': 0, 'reg': 0, 'reg_e': 4})
+    return render(request,'osat/donations.html',{'suc':0,'view_events_form':view_events_form})
 
 
 #final list
 def final_list(request):
+
+    # updates the paid list instantly
+    # CSV file
+
+    # offline registrations list
+    offline_eg = off_registration.objects.all().values_list('email', flat='true')
+
+    offline_tickets=tickets_offline.objects.all()
+
+    paid = []
+    paid_300 = []
+    paid_600 = []
+    paid_900 = []
+    paid_1200 = []
+    paid_1500 = []
+    paid_1800 = []
+    paid_2100 = []
+
+    # emails of all of the people who paid for the tickets
+    paid_300_emails = []
+    paid_600_emails = []
+    paid_900_emails = []
+    paid_1200_emails = []
+    paid_1500_emails = []
+    paid_1800_emails = []
+    paid_2100_emails = []
+
+    donations_email = []
+
+    # row[0]=mojocode
+    # row[4]=emailid
+    # row[7]=amount
+    with open('osat/static/osat/paid_csv.csv') as csvfile:
+        s = csv.reader(csvfile, delimiter=',')
+        for row in s:
+            if (len(row) > 7):
+                if (row[0] != 'Payment ID'):
+                    if (row[2] == 'OSAT REGISTRATION'):
+                        temp = [row[4]]
+                        paid = paid + temp
+                    elif row[2] == 'Donation':
+                        temp = [row[4] + '\t' + row[7]]
+                        donations_email = donations_email + temp
+                    else:
+                        if (float(row[7]) > 300 and float(row[7]) < 350):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_300 = paid_300 + temp
+                            paid_300_emails = paid_300_emails + [row[4]]
+                        elif (float(row[7]) > 600 and float(row[7]) < 650):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_600 = paid_600 + temp
+                            paid_600_emails = paid_600_emails + [row[4]]
+                        elif (float(row[7]) > 900 and float(row[7]) < 950):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_900 = paid_900 + temp
+                            paid_900_emails = paid_900_emails + [row[4]]
+                        elif (float(row[7]) > 1200 and float(row[7]) < 1250):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_1200 = paid_1200 + temp
+                            paid_1200_emails = paid_1200_emails + [row[4]]
+                        elif (float(row[7]) > 1500 and float(row[7]) < 1550):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_1500 = paid_1500 + temp
+                            paid_1500_emails = paid_1500_emails + [row[4]]
+                        elif (float(row[7]) > 1800 and float(row[7]) < 1850):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_1800 = paid_1800 + temp
+                            paid_1800_emails = paid_1800_emails + [row[4]]
+                        elif (float(row[7]) > 2100 and float(row[7]) < 2250):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_2100 = paid_2100 + temp
+                            paid_2100_emails = paid_2100_emails + [row[4]]
+                            # print(row[0]+'\t'+row[4])
+    for i in offline_reg:
+        paid=paid+[i]
+
+    alumni.objects.all().update(no_attending='0')
+
+    for i in paid:
+        alumni.objects.filter(email=i).update(no_attending='-1')
+
+    for i in paid_300_emails:
+        alumni.objects.filter(email=i).update(no_attending='1')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_300_emails)
+    # tickets_paid_alumni_details.update(no_attending=1)
+
+    for i in paid_600_emails:
+        alumni.objects.filter(email=i).update(no_attending='2')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_600_emails)
+    # tickets_paid_alumni_details.update(no_attending=2)
+
+    for i in paid_900_emails:
+        alumni.objects.filter(email=i).update(no_attending='3')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_900_emails)
+    # tickets_paid_alumni_details.update(no_attending=3)
+
+    for i in paid_1200_emails:
+        alumni.objects.filter(email=i).update(no_attending='4')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_1200_emails)
+    # tickets_paid_alumni_details.update(no_attending=4)
+
+    for i in paid_1500_emails:
+        alumni.objects.filter(email=i).update(no_attending='5')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_1500_emails)
+    # tickets_paid_alumni_details.update(no_attending=5)
+
+    for i in paid_1800_emails:
+        alumni.objects.filter(email=i).update(no_attending='6')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_1800_emails)
+    # tickets_paid_alumni_details.update(no_attending=6)
+
+    for i in paid_2100_emails:
+        alumni.objects.filter(email=i).update(no_attending='7')
+        # tickets_paid_alumni_details.objects.filter('email' in paid_2100_emails)
+        # tickets_paid_alumni_details.update(no_attending=7)
+    paid_no = len(paid)
+
+    for i in offline_tickets:
+        alumni.objects.filter(email=i.email).update(no_attending=i.no_attending)
+
+    for i in offline_tickets:
+        alumni.objects.filter(email=i.email).update(no_attending=i.no_attending)
+
+    paid_no = len(paid)
+    # end of csv file
     username="finallistadmin"
     password="finallist12345"
+
     final_list_details = alumni.objects.exclude(no_attending='0').order_by('pk','no_attending' )
     if request.method=='POST':
         form = ec_login_form(request.POST)
@@ -618,9 +1099,154 @@ def final_list(request):
         return render(request,'osat/final_list.html',{'ec_login_form':ec_login_form,'final_list_details':final_list_details,'suc':0})
 
 def final_list_attend(request, pk):
+    # updates the paid list instantly
+    # CSV file
+
+    # offline registrations list
+    offline_reg = off_registration.objects.all().values_list('email', flat='true')
+    offline_tickets=tickets_offline.objects.all()
+
+    paid = []
+    paid_300 = []
+    paid_600 = []
+    paid_900 = []
+    paid_1200 = []
+    paid_1500 = []
+    paid_1800 = []
+    paid_2100 = []
+
+    # emails of all of the people who paid for the tickets
+    paid_300_emails = []
+    paid_600_emails = []
+    paid_900_emails = []
+    paid_1200_emails = []
+    paid_1500_emails = []
+    paid_1800_emails = []
+    paid_2100_emails = []
+
+    donations_email = []
+
+    # row[0]=mojocode
+    # row[4]=emailid
+    # row[7]=amount
+    with open('osat/static/osat/paid_csv.csv') as csvfile:
+        s = csv.reader(csvfile, delimiter=',')
+        for row in s:
+            if (len(row) > 7):
+                if (row[0] != 'Payment ID'):
+                    if (row[2] == 'OSAT REGISTRATION'):
+                        temp = [row[4]]
+                        paid = paid + temp
+                    elif row[2] == 'Donation':
+                        temp = [row[4] + '\t' + row[7]]
+                        donations_email = donations_email + temp
+                    else:
+                        if (float(row[7]) > 300 and float(row[7]) < 350):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_300 = paid_300 + temp
+                            paid_300_emails = paid_300_emails + [row[4]]
+                        elif (float(row[7]) > 600 and float(row[7]) < 650):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_600 = paid_600 + temp
+                            paid_600_emails = paid_600_emails + [row[4]]
+                        elif (float(row[7]) > 900 and float(row[7]) < 950):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_900 = paid_900 + temp
+                            paid_900_emails = paid_900_emails + [row[4]]
+                        elif (float(row[7]) > 1200 and float(row[7]) < 1250):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_1200 = paid_1200 + temp
+                            paid_1200_emails = paid_1200_emails + [row[4]]
+                        elif (float(row[7]) > 1500 and float(row[7]) < 1550):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_1500 = paid_1500 + temp
+                            paid_1500_emails = paid_1500_emails + [row[4]]
+                        elif (float(row[7]) > 1800 and float(row[7]) < 1850):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_1800 = paid_1800 + temp
+                            paid_1800_emails = paid_1800_emails + [row[4]]
+                        elif (float(row[7]) > 2100 and float(row[7]) < 2250):
+                            temp = [row[0] + '\t' + row[4]]
+                            paid_2100 = paid_2100 + temp
+                            paid_2100_emails = paid_2100_emails + [row[4]]
+                            # print(row[0]+'\t'+row[4])
+    for i in offline_reg:
+        paid = paid + [i]
+    paid_no = len(paid)
+
+    alumni.objects.all().update(no_attending='0')
+
+    for i in paid:
+        alumni.objects.filter(email=i).update(no_attending='-1')
+
+    for i in paid_300_emails:
+        alumni.objects.filter(email=i).update(no_attending='1')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_300_emails)
+    # tickets_paid_alumni_details.update(no_attending=1)
+
+    for i in paid_600_emails:
+        alumni.objects.filter(email=i).update(no_attending='2')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_600_emails)
+    # tickets_paid_alumni_details.update(no_attending=2)
+
+    for i in paid_900_emails:
+        alumni.objects.filter(email=i).update(no_attending='3')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_900_emails)
+    # tickets_paid_alumni_details.update(no_attending=3)
+
+    for i in paid_1200_emails:
+        alumni.objects.filter(email=i).update(no_attending='4')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_1200_emails)
+    # tickets_paid_alumni_details.update(no_attending=4)
+
+    for i in paid_1500_emails:
+        alumni.objects.filter(email=i).update(no_attending='5')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_1500_emails)
+    # tickets_paid_alumni_details.update(no_attending=5)
+
+    for i in paid_1800_emails:
+        alumni.objects.filter(email=i).update(no_attending='6')
+    # tickets_paid_alumni_details.objects.filter('email' in paid_1800_emails)
+    # tickets_paid_alumni_details.update(no_attending=6)
+
+    for i in paid_2100_emails:
+        alumni.objects.filter(email=i).update(no_attending='7')
+        # tickets_paid_alumni_details.objects.filter('email' in paid_2100_emails)
+        # tickets_paid_alumni_details.update(no_attending=7)
+    paid_no = len(paid)
+
+    for i in offline_tickets:
+        alumni.objects.filter(email=i.email).update(no_attending=i.no_attending)
+
+    # end of csv file
+
     if(pk == '3291096' ):
         alumni.objects.all().update(attend=0)
     else:
         alumni.objects.filter(pk=pk).update(attend=1)
     final_list_details = alumni.objects.exclude(no_attending='0').order_by('attend','pk', 'no_attending')
     return render(request, 'osat/final_list.html',{'ec_login_form': ec_login_form, 'final_list_details': final_list_details, 'suc': 1})
+
+def offline_registration(request):
+    if request.method == 'POST':
+        form1 = ec_login_form(request.POST)
+        form2 = off_registration_form(request.POST)
+        form3=offline_tickets_form(request.POST)
+        if 'adminlogin' in request.POST:
+            if(form1.is_valid):
+                if(form1.data['email']=='finallistadmin' and form1.data['password']=='finallist12345'):
+                    return render(request, 'osat/offline_registration.html',{"off_reg": off_registration_form, "offline_tickets_form": offline_tickets_form,'suc':1})
+                else:
+                    return render(request, 'osat/offline_registration.html',{"off_reg": off_registration_form, "offline_tickets_form": offline_tickets_form,'suc': 0})
+        elif 'alumni_registration' in request.POST:
+            if(form2.is_valid):
+                c=form2.save()
+                #c.save()
+                return render(request, 'osat/offline_registration.html', {"off_reg": off_registration_form,"offline_tickets_form":offline_tickets_form,'suc':1})
+        elif 'offline_ticket' in request.POST:
+            if(form3.is_valid):
+                c=form3.save()
+                #c.save()
+                return render(request, 'osat/offline_registration.html', {"off_reg": off_registration_form,"offline_tickets_form":offline_tickets_form,'suc':1})
+    else:
+        return render(request,'osat/offline_registration.html',{"off_reg":off_registration_form,"offline_tickets_form":offline_tickets_form,'suc':0,'ec_login_form':ec_login_form})
