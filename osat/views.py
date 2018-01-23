@@ -112,6 +112,9 @@ paid_1500_emails = []
 paid_1800_emails = []
 paid_2100_emails = []
 donations_email = []
+
+no_details=[]
+
 # row[0]=mojocode
 # row[4]=emailid
 # row[7]=amount
@@ -121,6 +124,9 @@ with open('osat/static/osat/paid_csv.csv') as csvfile:
         if (len(row) > 7):
             if (row[0] != 'Payment ID'):
                 if (row[2] == 'OSAT REGISTRATION'):
+                    if row[2] not in alumni.objects.all().values_list('email',flat='true'):
+                        no_details= no_details+[row[4]]
+                    alumni.objects.filter(email=row[4]).update(registration_fee=1)
                     temp = [row[4]]
                     paid = paid + temp
                 elif row[2] == 'Donation':
@@ -158,10 +164,14 @@ with open('osat/static/osat/paid_csv.csv') as csvfile:
                         # print(row[0]+'\t'+row[4])
 
 #to include the emails of offline registered with the online
-for i in offline_reg:
-    paid=paid+[i]
+#for i in offline_reg:
+#    paid=paid+[i]
 paid_no = len(paid)
+for i in no_details:
+    if i not in paid:
+        paid_no=paid_no+1
 # end of csv file
+
 
 a=alumni
 
@@ -252,7 +262,7 @@ def a_registration(request):
                     a = form1.save(commit=False)
                     form1.save()
                     #return render(request,'osat/index.html', {'name':a,'submit':1})
-                    return render(request,'osat/payments.html', {'name':a,'submit':1})
+                    return render(request,'osat/payments.html', {'name':a,'submit':1,'suc':0})
                 else :
                     return render(request, "osat/a_registration.html",{'view_events_form': view_events_form, 'detailsform': detailsform(), 'pay': 1,'notpaid': 0, 'reg': 0,'reg_e':1})
             else:
@@ -432,6 +442,12 @@ def el_registration3(request):
 def admin2(request):
     #payment_details={'paid':paid,'paid_300':paid_300,'paid_600':paid_600,'paid_900':paid_900,'paid_1200':paid_1200,'paid_1500':paid_1500,'paid_1800':paid_1800,'paid_2100':paid_2100}
 
+    teachers_registered=0
+    teacher_homecoming=0
+
+    sum_of_alumni=0
+    sum_of_attending=0
+
     for i in j:
         teachers_registered+=1
         teacher_homecoming+=i.no_attending
@@ -439,26 +455,37 @@ def admin2(request):
         sum_of_alumni=sum_of_alumni+1
         if(i.no_attending!=-1):
             sum_of_attending=sum_of_attending+i.no_attending
+
+    paid_no_with_details=0
+    for i in alumni.objects.all():
+        if(i.registration_fee == 1):
+            paid_no_with_details+=1
+
     id="osatadmin"
     passw="osat12345"
+
+    paid=alumni.objects.filter(registration_fee=1).values_list('email',flat='true')
+
+
+
     if request.method=='POST':
         form1 = ec_login_form(request.POST)
         form2 = off_registration_form(request.POST)
         form3 = notificationsform(request.POST)
         if 'adminlogin' in request.POST:
             if form1.is_valid() and form1.data['email'] == id and form1.data['password'] == passw:
-                return render(request,'osat/admin2.html',{'ec_login_form':ec_login_form ,'suc':1,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j,'m':m,'off_reg':off_registration_form,'off_reg_details':off_reg_details,'teachers_registered':teachers_registered,'teacher_homecoming':teacher_homecoming,'paid':paid,'paid_no':paid_no,'notificationsform': notificationsform,'paid_300':paid_300,'paid_600':paid_600,'paid_900':paid_900,'paid_1200':paid_1200,'paid_1500':paid_1500,'paid_1800':paid_1800,'paid_2100':paid_2100,'donations':donations_email})
+                return render(request,'osat/admin2.html',{'ec_login_form':ec_login_form ,'suc':1,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j,'m':m,'off_reg':off_registration_form,'off_reg_details':off_reg_details,'teachers_registered':teachers_registered,'teacher_homecoming':teacher_homecoming,'paid':paid,'paid_no':paid_no,'notificationsform': notificationsform,'paid_300':paid_300,'paid_600':paid_600,'paid_900':paid_900,'paid_1200':paid_1200,'paid_1500':paid_1500,'paid_1800':paid_1800,'paid_2100':paid_2100,'donations':donations_email,'paid_no_with_details':paid_no_with_details})
             else:
                 return render(request, 'osat/admin2.html', {'ec_login_form': ec_login_form, 'suc': 0,'a':a,'sum_of_alumni':sum_of_alumni,'sum_of_attending':sum_of_attending,'j':j,'j':j,'m':m,'off_reg':off_registration_form,'off_reg_details':off_reg_details,'notificationsform': notificationsform,'donations':donations_email})
         elif 'off_reg' in request.POST:
             if form2.is_valid():
                 c=form2.save()
                 alumni.objects.filter(email=form2.data['email']).update(no_attending=-1)
-                return render(request, 'osat/admin2.html',{'ec_login_form': ec_login_form, 'suc': 1, 'a': a, 'sum_of_alumni': sum_of_alumni,'sum_of_attending': sum_of_attending, 'j': j, 'm': m, 'off_reg': off_registration_form,'off_reg_details':off_reg_details,'teachers_registered':teachers_registered,'teacher_homecoming':teacher_homecoming,'paid':paid,'paid_no':paid_no,'notificationsform': notificationsform,'paid_300':paid_300,'paid_600':paid_600,'paid_900':paid_900,'paid_1200':paid_1200,'paid_1500':paid_1500,'paid_1800':paid_1800,'paid_2100':paid_2100,'donations':donations_email})
+                return render(request, 'osat/admin2.html',{'ec_login_form': ec_login_form, 'suc': 1, 'a': a, 'sum_of_alumni': sum_of_alumni,'sum_of_attending': sum_of_attending, 'j': j, 'm': m, 'off_reg': off_registration_form,'off_reg_details':off_reg_details,'teachers_registered':teachers_registered,'teacher_homecoming':teacher_homecoming,'paid':paid,'paid_no':paid_no,'notificationsform': notificationsform,'paid_300':paid_300,'paid_600':paid_600,'paid_900':paid_900,'paid_1200':paid_1200,'paid_1500':paid_1500,'paid_1800':paid_1800,'paid_2100':paid_2100,'donations':donations_email,'paid_no_with_details':paid_no_with_details})
         elif 'notification' in request.POST:
             if form3.is_valid():
                 form3.save()
-                return render(request, 'osat/admin2.html',{'ec_login_form': ec_login_form, 'suc': 1, 'a': a, 'sum_of_alumni': sum_of_alumni,'sum_of_attending': sum_of_attending, 'j': j, 'm': m, 'off_reg': off_registration_form,'off_reg_details': off_reg_details,'teachers_registered':teachers_registered,'teacher_homecoming':teacher_homecoming,'paid':paid,'paid_no':paid_no, 'notificationsform': notificationsform,'paid_300':paid_300,'paid_600':paid_600,'paid_900':paid_900,'paid_1200':paid_1200,'paid_1500':paid_1500,'paid_1800':paid_1800,'paid_2100':paid_2100,'donations':donations_email})
+                return render(request, 'osat/admin2.html',{'ec_login_form': ec_login_form, 'suc': 1, 'a': a, 'sum_of_alumni': sum_of_alumni,'sum_of_attending': sum_of_attending, 'j': j, 'm': m, 'off_reg': off_registration_form,'off_reg_details': off_reg_details,'teachers_registered':teachers_registered,'teacher_homecoming':teacher_homecoming,'paid':paid,'paid_no':paid_no, 'notificationsform': notificationsform,'paid_300':paid_300,'paid_600':paid_600,'paid_900':paid_900,'paid_1200':paid_1200,'paid_1500':paid_1500,'paid_1800':paid_1800,'paid_2100':paid_2100,'donations':donations_email,'paid_no_with_details':paid_no_with_details})
             else :
                 return HttpResponse('Invalid')
     else:
@@ -635,7 +662,7 @@ def payments(request,pk=-1):
                         email=alumni_details.email,
                         buyer_name=alumni_details.fname,
                         phone=alumni_details.phno,
-                        redirect_url="http://127.0.0.1:8000/osat/payments/"+str(alumni_details.pk),
+                        redirect_url="osat.co.in/osat/payments/"+str(alumni_details.pk),
                         #redirect_url="http://127.0.0.1:8000/osat/payments",
                     )
                     # print the long URL of the payment request.
@@ -650,6 +677,7 @@ def payments(request,pk=-1):
                     return render(request,"osat/registration.html",{'view_events_form': view_events_form,'reg_e': 5})
         return render(request,'osat/payments.html',{'view_events_form':view_events_form,'suc':0,'email':0})
     else:
+        alumni.objects.filter(pk=pk).update(registration_fee=1)
         alumni_details=alumni.objects.filter(pk=pk)
         alumni_details=alumni_details[0]
         return render(request, 'osat/payments.html', {'suc': 2, 'alumni_details': alumni_details})

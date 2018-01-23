@@ -46,18 +46,18 @@ class="active"
 <h1>Registration fee Rs.500/-</h1>
 <br>
 <br>
-<p>Name:{{ alumni_details.fname }}</p>
-<p>E-mail{{ alumni_details.email }}</p>
-<p>Phone NO:{{ alumni_details.phno }}</p>
+<p>Name: {{ alumni_details.fname }}</p>
+<p>E-mail: {{ alumni_details.email }}</p>
+<p>Phone NO: {{ alumni_details.phno }}</p>
 <br>
 <br>
 <a href={{ link }}><div class="btn btn-primary">Pay now</div></a>
 {% elif suc == 2 %}
 <h1>your payment was successful</h1>
 <h2>Details</h2>
-<p>Name:{{ alumni_details.fname }}</p>
-<p>E-mail{{ alumni_details.email }}</p>
-<p>Phone NO:{{ alumni_details.phno }}</p>
+<p>Name: {{ alumni_details.fname }}</p>
+<p>E-mail: {{ alumni_details.email }}</p>
+<p>Phone NO: {{ alumni_details.phno }}</p>
 <p>Registration fee paid:Rs.500/-</p>
 {% endif %}
 {% endblock %}

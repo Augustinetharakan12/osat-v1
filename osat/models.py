@@ -28,6 +28,7 @@ class alumni(models.Model):
 
     no_attending=models.IntegerField(default=0)
     attend=models.IntegerField(default=0)
+    registration_fee=models.IntegerField(default=0)
 
     def __str__(self):
         return self.fname+' '+ self.lname
