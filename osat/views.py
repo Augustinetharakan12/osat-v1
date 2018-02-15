@@ -124,7 +124,7 @@ with open('osat/static/osat/paid_csv.csv') as csvfile:
         if (len(row) > 7):
             if (row[0] != 'Payment ID'):
                 if (row[2] == 'OSAT REGISTRATION'):
-                    if row[2] not in alumni.objects.all().values_list('email',flat='true'):
+                    if row[4] not in alumni.objects.all().values_list('email',flat='true'):
                         no_details= no_details+[row[4]]
                     alumni.objects.filter(email=row[4]).update(registration_fee=1)
                     temp = [row[4]]
@@ -166,10 +166,13 @@ with open('osat/static/osat/paid_csv.csv') as csvfile:
 #to include the emails of offline registered with the online
 #for i in offline_reg:
 #    paid=paid+[i]
-paid_no = len(paid)
 for i in no_details:
-    if i not in paid:
-        paid_no=paid_no+1
+    print(i)
+paid_no = len(no_details)+len(alumni.objects.filter(registration_fee=1))+10
+#    for i in no_details:
+#        if i not in paid:
+#            paid_no=paid_no+1
+
 # end of csv file
 
 

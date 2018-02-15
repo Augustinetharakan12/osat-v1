@@ -106,7 +106,7 @@
         <th style="color:white;">Email</th>
         <th style="color:white;">Phone no:</th>
         <th style="color:white;">Year of passout</th>
-        <th style="color:white;">event</th>
+        <th style="color:white;">Registration fee</th>
       </tr>
     </thead>
     <tbody>
@@ -118,7 +118,7 @@
         <td style="color:white;">{{ i.email }}</td>
         <td style="color:white;">{{ i.phno }}</td>
         <td style="color:white;">{{ i.year_pass }}</td>
-        <td style="color:white;">{{ i.no_attending }}</td>
+        <td style="color:white;">{% if i.registration_fee == 1 %}YES{% else %}NO{% endif %}</td>
       </tr>
     {% endfor %}
     </tbody>
